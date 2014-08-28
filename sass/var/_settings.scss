@@ -46,7 +46,7 @@ $rhythm-height: .711;
 // Modular Scale Settings
 // http://www.modularscale.com by Tim Brown
 // https://github.com/scottkellum/modular-scale
-$ms-ratio: $golden;						// Ratio for Modular Scale
+$ms-ratio: 1.6180339887;						// Ratio for Modular Scale
 $ms-base: 16px 78px;
 $base-font-size: ms(0);
 // Gumby Default Scale Values: 16, 18, 26, 30, 42, 48, 68, 78, 110, 126;
