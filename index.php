@@ -1,18 +1,22 @@
 
 <?php
+print_r($_POST);
 include("header.inc");
 include("library/mysqli_datalayer.php");
 include("library/connection.php");
 echo "<div class='topbox'>";
 echo "<div class='row'>";
     echo "<div class='twelve columns special head'><h1>SMP2 Project</h1>
-    <h3><span>Sponsored by the <span>CRUK </span> and Newcastle University</span></h3>
+    <h3><span>A Cancer Research UK project with Newcastle University</span></h3>
     </div>";
 echo "</div></div>";
+
+//setup the form for submission and validation
+echo "<form id='smp2_form' action='index.php?x=1' method='get'>";
 //start entering the fields to create the XML report
 echo "<div class='row'>";
 echo "<div class='six columns'>";
-echo "<li class='field'>
+echo "<ul><li class='field'>
     <label class='inline' for='hubName'>Select Hub Name</label><br />
     <div class='picker'>
     <select name='hubName'>
@@ -38,7 +42,7 @@ echo "<li class='field'>
     </select>
 
         </div>";
-echo "</li>";
+echo "</li></ul>";
 echo "</div>";
 echo "</div>";
 echo "<div style='clear:both;'></div>";
@@ -49,12 +53,12 @@ echo "</div>";
 
 echo "<div class='row'>";
 echo "<div class='six columns'>";
-echo "<div class='field'>
+echo "<div class='field no-icon'>
           <input class='input' type='text' placeholder='Enter the Organisation Code' name='organisationCode'/>
         </div>";
 echo "</div>";
 echo "<div class='six columns'>";
-echo "<div class='field'>
+echo "<div class='field no-icon'>
           <input class='input' type='text' placeholder='Enter the Patient Identifier' name='localPatientIdentifier'/>
         </div>";
 echo "</div>";
@@ -62,12 +66,12 @@ echo "</div>";
 
 echo "<div class='row'>";
 echo "<div class='six columns'>";
-echo "<div class='field'>
+echo "<div class='field no-icon'>
           <input class='input' type='text' placeholder='Enter the Oncologists Initials' name='treatingOncologistInitials'/>
         </div>";
 echo "</div>";
 echo "<div class='six columns'>";
-echo "<div class='field'>
+echo "<div class='field no-icon'>
           <input class='input' type='text' placeholder='Enter the Patients Age' name='ageAtAttendance'/>
         </div>";
 echo "</div>";
@@ -75,7 +79,7 @@ echo "</div>";
 
 echo "<div class='row'>";
 echo "<div class='six columns'>";
-echo "<li class='field'>
+echo "<ul><li class='field'>
     <label class='inline' for='genderCode'>Select Gender</label><br />
     <div class='picker'>
     <select name='genderCode'>
@@ -86,10 +90,10 @@ echo "<li class='field'>
     <option value='9'>9 - Not specified</option>
     </select>
     </div>
-        </li>";
+        </li></ul>";
 echo "</div>";
 echo "<div class='six columns'>";
-echo "<li class='field'>
+echo "<ul><li class='field'>
            <label class='inline' for='ethnicCategory'>Select Ethnicity</label>
     <div class='picker'>
     <select name='ethnicCategory'>
@@ -114,13 +118,13 @@ echo "<li class='field'>
     <option value='99'>99 - Not known</option>
     </select>
     </div>
-    </li>";
+    </li></ul>";
 echo "</div>";
 echo "</div>";
 
 echo "<div class='row'>";
 echo "<div class='six columns'>";
-echo "<li class='field'>
+echo "<ul><li class='field'>
           <label class='inline' for='smokingStatus'>Select Smoking Status</label>
     <div class='picker'>
     <select name='smokingStatus'>
@@ -133,11 +137,11 @@ echo "<li class='field'>
     <option value='99'>99 - Not known</option>
     </select>
     </div>
-    </li>";
+    </li></ul>";
 echo "</div>";
 
 echo "<div class='six columns'>";
-echo "<div class='field'><br />
+echo "<div class='field no-icon'><br />
           <input class='input' type='text' placeholder='Enter the No. of Prior Therapy Lines (0,1,2,3,4,N/K,N/A)' name='noOfPriorLinesTherapy'/>
         </div>";
 echo "</div>";
@@ -165,39 +169,22 @@ $treatments = array("01 - Surgery","02 - Anti-cancer drug regimen (Cytotoxic Che
     "22 - Radiosurgery",
     "97 - Other Treatment",
     "98 - All treatment declined");
-echo "<li class='field'>
-        <label class='inline' for='cancerTreatmentModality'>Select Treatment Types</label><BR />
+echo "<ul><li class='field'>
+        <label class='inline' for='cancerTreatmentModality'>Select Treatment Types (Hold Ctrl to select multiple treatments)</label><BR />
         <div class='picker'>";
-echo "<select style='height:8.6em;' id='cancerTreatmentModality' name='cancerTreatmentModality[]'  multiple='multiple'>";
+echo "<select style='height:27.6em;' id='cancerTreatmentModality' name='cancerTreatmentModality[]'  multiple='multiple'>";
 foreach($treatments as $treatment){
     echo "<option>".$treatment."</option>";
 }
 echo "</select>";
 echo "</div>";
-echo "</li>";
+echo "</li></ul>";
 echo "</div>";
 
 
 echo "<div class='row'>";
-echo "<div class='six columns'>";
-    echo "<li class='field'>
-            <label class='inline' for='smokingStatus'>Select Smoking Status</label>
-            <div class='picker'>
-                <select name='smokingStatus'>
-                    <option value='#' disabled selected>Select Smoking Status</option>
-                    <option value='1'>1 - Current smoker</option>
-                    <option value='2'>2 - Ex smoker</option>
-                    <option value='3'>3 - Non-smoker - history unknown</option>
-                    <option value='4'>4 - Never smoked</option>
-                    <option value='Z'>Z - Not stated (PERSON asked but declined to provide a response)</option>
-                    <option value='99'>99 - Not known</option>
-                </select>
-            </div>
-          </li>";
-echo "</div>";
-echo "<div class='six columns'>";
-echo "<li class='field'>
-    <label class='inline' for='performanceStatus'>Select the patients movement status</label>
+echo "<ul><li class='field'>
+    <label class='inline' for='performanceStatus'>Select the patients performance status (WHO)</label>
     <div class='picker'>
     <select name='performanceStatus'>
     <option value='#' disabled selected>Select movement status</option>
@@ -209,9 +196,507 @@ echo "<li class='field'>
     <option value='9'>9 - Not recorded</option>
     </select>
 </div>
-      </li>";
+      </li></ul>";
+echo "</div>";
+
+echo "<div class='row'>";
+echo "<h3>Sample Information</h3>";
+echo "</div>";
+
+echo "<div class='row'>";
+echo "<div class='six columns'>";
+echo "<div class='field no-icon'><BR />
+          <input class='input' type='text' placeholder='Enter the Sample ID' name='sourceSampleIdentifier'/>
+        </div>
+        </div>";
+echo "<div class='six columns'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='originOfSample'>Select the origin of the Sample</label>
+            <div class='picker'>
+                <select name='originOfSample'>
+                    <option value='#' disabled selected>Select sample Origin</option>
+                    <option value='1'>Primary tumor</option>
+                    <option value='2'>Metastic site - Lymph node</option>
+                    <option value='3'>Metastic site - Other</option>
+                </select>
+            </div>
+          </li></ul>";
+echo "</div>";
+echo "</div>";
+echo "<div class='row'>";
+echo "<div class='six columns'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='typeOfSample'>Select the type of sample</label>
+            <div class='picker'>
+                <select name='typeOfSample'>
+                    <option value='#' disabled selected>Select type of sample</option>
+                    <option value='1'>1 - Blood</option>
+                    <option value='3'>3 - Tissue- Resection</option>
+                    <option value='8'>8 - Tissue- Bronchoscopic biopsy</option>
+                    <option value='9'>9 - Tissue- CT guided biopsy</option>
+                    <option value='10'>10 -Tissue- Surgical biopsy</option>
+                    <option value='11'>11 - Tissue- Other biopsy</option>
+                    <option value='12'>12 - Cytology cell block- EBUS/EUS FNA</option>
+                    <option value='13'>13 - Cytology cell block- Bronchoscopic washing</option>
+                    <option value='14'>14 - Cytology cell block- CT guided</option>
+                    <option value='15'>15 - Cytology cell block- Effusion</option>
+                    <option value='16'>16 - Cytology cell block- Other</option>
+                    <option value='17'>17 - Extracted DNA</option>
+                </select>
+            </div>
+          </li></ul>";
+echo "</div>";
+echo "<div class='six columns'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='procedureToObtainSample'>Select the procedure for obtaining the sample</label>
+            <div class='picker'>
+                <select name='procedureToObtainSample'>
+                    <option value='#' disabled selected>Select the procedure </option>
+                    <option value='1'>1 - CT guided biopsy</option>
+                    <option value='2'>2 - US guided biopsy</option>
+                    <option value='3'>3 - Surgical lung biopsy</option>
+                    <option value='4'>4 - Surgical resection</option>
+                    <option value='5'>5 - EBUS</option>
+                    <option value='6'>6 - EUS</option>
+                    <option value='7'>7 - Other biopsy</option>
+                    <option value='8'>8 - Other FNA cytology</option>
+                </select>
+            </div>
+          </li></ul>";
 echo "</div>";
 echo "</div>";
 
+echo "<div class='row'>";
+echo "<div class='six columns'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='typeOfBiopsy'>Select the Type of Biopsy</label>
+            <div class='picker'>
+                <select name='typeOfBiopsy'>
+                    <option value='#' disabled selected>Select type of Biopsy</option>
+                    <option value='0'>0 - unknown</option>
+                    <option value='1'>1 - Diagnostic biopsy</option>
+                    <option value='2'>2 - Repeat biopsy due to sample test failure</option>
+                    <option value='3'>3 - Repeat biopsy due to lack of sample after local testing</option>
+                    <option value='4'>4 - Mandatory repeat biopsy after targeted first line therapy</option>
+                    <option value='5'>5 - Repeat biopsy due to non actionable mutation in diagnostic biopsy</option>
+                    <option value='6'>6 - Voluntary repeat biopsy after first line therapy</option>
+                    <option value='7'>7 - Voluntary repeat biopsy after targetted therapy </option>
+                </select>
+            </div>
+          </li></ul>";
+echo "</div>";
+echo "<div class='six columns'>";
+echo "<div class='field no-icon'><BR />
+          <input class='input' type='date' placeholder='Enter the Date the sample was taken (YYYY-MM-DD)' name='dateSampleTaken'/>
+        </div>
+        </div>";
+echo "</div>";
+echo "</div>";
 
+echo "<div class='row'>";
+echo "<div class='six columns'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='tumorType'>Select the tumor type</label><BR />
+            <div class='picker'>
+                <select name='tumorType'>
+                    <option value='#' disabled selected>Select tumor type</option>
+                    <option value='1'>1 - Breast</option>
+                    <option value='2'>2 - Colorectal</option>
+                    <option value='3'>3 - Lung</option>
+                    <option value='4'>4 - Melanoma</option>
+                    <option value='5'>5 - Ovarian</option>
+                    <option value='6'>6 - Prostate</option>
+                    <option value='7'>7 - Other</option>
+                </select>
+            </div>
+          </li></ul>";
+echo "</div>";
+echo "<div class='six columns'>";
+echo "<div class='field no-icon'><BR />
+          <input class='input' type='text' placeholder='Enter the Morphology SNOMED' name='morphologySnomed'/>
+        </div>
+        </div>";
+echo "</div>";
+echo "</div>";
 
+echo "<div class='row'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='pathologyTCategory'>Select the pathology T Category</label><BR />
+            <div class='picker'>
+                <select name='pathologyTCategory'>
+                    <option value='#' disabled selected>Select T Category</option>
+                    <option value='0'>0 - unknown</option>
+                    <option value='TX'>TX - Primary tumour cannot be assessed</option>
+                    <option value='T0'>T0 - No evidence of primary tumour</option>
+                    <option value='Tis'>Tis - Carcinoma in situ</option>
+                    <option value='T1a'>T1a - Tumour ≤20 mm diameter</option>
+                    <option value='T1b'>T1b - Tumour >20–≤30 mm</option>
+                    <option value='T2'>T2 - Tumour >= 20mm from the carina, invades visceral pleura, partial atelectasis</option>
+                    <option value='T2a'>T2a - >30–≤50 mm</option>
+                    <option value='T2b'>T2b - >50–≤70 mm</option>
+                    <option value='T3'>T3 - >70 mm; involvement of parietal pleura, mediastinal pleura, chest wall, pericardium or
+diaphragm; tumour within 20 mm of the carina; atelectasis/obstructive pneumonitis
+involving whole lung; separate nodule(s) in the same lobe</option>
+                    <option value='T4'>T4 - Involvement of great vessels, mediastinum, carina, trachea, oesophagus, vertebra, or heart
+Separate tumour nodule(s) in different ipsilateral lobe</option>
+                    <option value='9'>9 - Not applicable</option>
+                </select>
+            </div>
+          </li></ul>";
+echo "</div>";
+echo "<div class='row'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='pathologyNCategory'>Select the pathology N Category</label><BR />
+            <div class='picker'>
+                <select name='pathologyNCategory'>
+                    <option value='#' disabled selected>Select N Category</option>
+                     <option value='0'>0 - unknown </option>
+                    <option value='NX'>NX - Regional lymph nodes cannot be assessed</option>
+                    <option value='N0'>N0 - No regional node involvement</option>
+                    <option value='N1'>N1 - Ipsilateral hilar/intrapulmonary nodes (node stations 10–14)</option>
+                    <option value='N2'>N2 - Ipsilateral mediastinal nodes (node stations 1–9)</option>
+                    <option value='N3'>N3 - Contralateral mediastinal, hilar, ipsilateral or contralateral scalene, supraclavicular nodes</option>
+                    <option value='9'>9 - not applicable</option>
+                </select>
+            </div>
+          </li></ul>";
+echo "</div>";
+
+echo "<div class='row'>";
+echo "<div class='six columns'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='pathologyMCategory'>Select the pathology M Category</label>
+            <div class='picker'>
+                <select name='pathologyMCategory'>
+                    <option value='#' disabled selected>Select M Category</option>
+                    <option value='0'>0 - unknown</option>
+                    <option value='M0'>M0 - No distant metastasis</option>
+                    <option value='M1'>M1 - Distant metastasis</option>
+                    <option value='M1a'>M1a - Separate tumour nodule(s) in a contralateral lobe; pleural nodules or malignant pleural or pericardial effusion.</option>
+                    <option value='M1b'>M1b - Distant metastasis</option>
+                    <option value='9'></option>
+                </select>
+            </div>
+          </li></ul>";
+echo "</div>";
+echo "<div class='six columns'>";
+echo "<div class='field no-icon'><BR />
+          <input class='input' type='text' placeholder='Enter the TNM Stage Grouping' name='integratedTNMStageGrouping'/>
+        </div>
+        </div>";
+echo "</div>";
+echo "</div>";
+
+echo "<div class='row'>";
+echo "<div class='six columns'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='alkStatus'>Select the ALK IHC Status</label><BR />
+            <div class='picker'>
+                <select name='alkStatus'>
+                    <option value='#' disabled selected>Select ALK IHC Status</option>
+                    <option value='P'>P-positive</option>
+                    <option value='N'>N-negative</option>
+                    <option value='E'>E-equivocal</option>
+                    <option value='X'>X-not known</option>
+                    <option value='Z'>Z-not performed</option>
+                    <option value='U'>U-technically unsatisfactory</option>
+                </select>
+            </div>
+          </li></ul>";
+echo "</div>";
+echo "<div class='six columns'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='egfrStatus'>Select the EGFR Status</label><br/>
+            <div class='picker'>
+                <select name='egfrStatus'>
+                    <option value='#' disabled selected>Select the EGFR</option>
+                    <option value='M'>M-mutation detected</option>
+                    <option value='N'>N-no mutation detected</option>
+                    <option value='X'>X-not known</option>
+                    <option value='F'>F-test failure</option>
+                    <option value='Z'>Z-not performed</option>
+                    <option value='Y'>Y-other result</option>
+                </select>
+            </div>
+          </li></ul>";
+echo "</div>";
+echo "</div>";
+
+echo "<div class='row'>";
+echo "<div class='six columns'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='alkFishStatus'>Select the ALK FISH Status</label><BR />
+            <div class='picker'>
+                <select name='alkFishStatus'>
+                    <option value='#' disabled selected>Select ALK FISH Status</option>
+                    <option value='R'>R-rearrangenent detected</option>
+                    <option value='N'>N-no rearrangenent detected</option>
+                    <option value='X'>X-not known</option>
+                    <option value='F'>F-test failure</option>
+                    <option value='Z'>Z-not performed</option>
+                    <option value='Y'>Y-other result</option>
+                </select>
+            </div>
+          </li></ul>";
+echo "</div>";
+echo "<div class='six columns'>";
+echo "<ul><li class='field'>
+            <label class='inline' for='krasStatus'>Select the KRAS Status</label><br/>
+            <div class='picker'>
+                <select name='krasStatus'>
+                    <option value='#' disabled selected>Select the KRAS</option>
+                    <option value='M'>M-mutation detected</option>
+                    <option value='N'>N-no mutation detected</option>
+                    <option value='X'>X-not known</option>
+                    <option value='F'>F-test failure</option>
+                    <option value='Z'>Z-not performed</option>
+                    <option value='Y'>Y-other result</option>
+                </select>
+            </div>
+          </li></ul>";
+echo "</div>";
+echo "</div>";
+
+echo "<div class='row'>";
+echo "<div class='six columns'>";
+
+echo "<div class='field no-icon'>
+          <input class='input' type='text' placeholder='Enter the date the sample was sent (YYYY-MM-DD)' name='dateSampleSent'/>
+        </div>
+        </div>";
+echo "</div>";
+echo "</div>";
+echo "<div class='row'>";
+    echo "<div  class='medium rounded metro primary btn'><input id='submit_button' type='submit' value='Save Sample' /></div>";
+echo "</div>";
+echo "</form>";
+echo "<div id='message_area'></div>";
+/*The bottom spacing to show that the page has ended*/
+echo "<div class='bottom_spacer'>";
+echo "<div class='bottom_image'><img src='img/cancerresearchuk.png' /></div>";
+echo "<div class='bottom_signature'>Coding by Ian Bettison (Newcastle University)</div>";
+echo "</div>";
+
+?>
+<script>
+
+    // initialize plugin
+    $('#smp2_form').validation({
+        // pass an array of required field objects
+        required: [
+            {
+                // name should reference a form inputs name attribute
+                // just passing the name property will default to a check for a present value
+                name: 'hubName',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'organisationCode',
+                validate: function($e) {
+                    return $e.val().length <= 5 & $e.val().length >0;
+                }
+            },
+            {
+                name: 'localPatientIdentifier',
+                validate: function($e) {
+                    return $e.val().length <= 10 & $e.val().length >0;
+                }
+            },
+            {
+                name: 'treatingOncologistInitials',
+                validate: function($e) {
+                    return $e.val().length <= 3;
+                }
+            },
+            {
+                name: 'ageAtAttendance',
+                validate: function($e) {
+                    if($e.val().length >0) {
+                        return $.isNumeric($e.val()) & $e.val().length <= 3 & $e.val() <=110;
+                    }else{
+                        return true;
+                    }
+                }
+            },
+            {
+                name: 'genderCode',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'ethnicCategory',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'noOfPriorLinesTherapy',
+                validate: function($e) {
+                    if($e.val().length >0) {
+                        switch ($e.val()){
+                            case "0":
+                            case "1":
+                            case "2":
+                            case "3":
+                            case "4":
+                            case "N/K":
+                            case "N/A":
+                                return true;
+                                break;
+                            default:
+                                return false;
+                        }
+                    }else{
+                        return true;
+                    }
+                }
+            },
+            {
+                name: 'sourceSampleIdentifier',
+                validate: function($e) {
+                    return $e.val().length <= 20 & $e.val().length >0;
+                }
+            },
+            {
+                name: 'dateSampleTaken',
+                validate: function($e) {
+                    return $e.val().match(/^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$/);
+                }
+            },
+            {
+                name: 'dateSampleSent',
+                validate: function($e) {
+                    return $e.val().match(/^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$/);
+                }
+            },
+            {
+                name: 'smokingStatus',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'cancerTreatmentModality',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'performanceStatus',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'procedureToObtainSample',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'originOfSample',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'typeOfSample',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'morphologySnomed',
+                validate: function($e) {
+                    return $e.val().length >0 & $e.val().length <=18;
+                }
+            },
+            {
+                name: 'typeOfBiopsy',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'tumorType',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'pathologyTCategory',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'pathologyNCategory',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'pathologyMCategory',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'integratedTNMStageGrouping',
+                validate: function($e) {
+                    if($e.val().length >0) {
+                        return $e.val().length <= 5;
+                    }else{
+                        return true;
+                    }
+                }
+            },
+            {
+                name: 'alkStatus',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'egfrStatus',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'alkFishStatus',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            },
+            {
+                name: 'krasStatus',
+                validate: function($e) {
+                    return $e.val() !== "#";
+                }
+            }
+        ],
+        // callback for failed validation on form submit
+        fail: function() {
+            alert("Form validation failed");
+            Gumby.error('Form validation failed');
+        },
+        // callback for successful validation on form submit
+        // if omitted, form will submit normally
+        submit: function(data) {
+           $.ajax({
+                url: 'library/classes/dbWrite.Class.php',
+                data: data,
+                type: "POST",
+                success: function(data) {
+                    $("#message_area").html(data);
+                    alert("Submitted");
+                }
+           });
+        }
+    });
+
+</script>

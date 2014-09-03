@@ -77,7 +77,6 @@
 	<script src="js/libs/ui/gumby.navbar.js"></script>
 	<script src="js/libs/ui/jquery.validation.js"></script>
 	<script src="js/libs/gumby.init.js"></script>
-
 	<!--
 	Google's recommended deferred loading of JS
 	gumby.min.js contains gumby.js, all UI modules and gumby.init.js
