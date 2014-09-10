@@ -1684,6 +1684,8 @@ table.rounded thead th, table.rounded thead td, table.rounded caption + tbody tr
 
 body { background-color: #ededed; }
 
+table tr td, table tbody tr td { font-size: 14px; font-weight: 100; padding: 0px; }
+
 .inline { line-height: 14px; color: #c68609; font-weight: 200; }
 
 .topbox { background-color: #469659; height: 11em; margin-bottom: 1em; box-shadow: 0 2px 5px #888; }

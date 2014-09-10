@@ -142,8 +142,8 @@ class dl {
 		}
 		return false;	
    	}
-   
-   public static function closedb() {
+
+     public static function closedb() {
    	self::$mysqli->close();
    }	
  }

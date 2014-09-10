@@ -2,6 +2,11 @@
 body {
   background-color: #ededed;
 }
+table tr td, table tbody tr td {
+  font-size: 14px;
+  font-weight: 100;
+  padding: 0px;
+}
 .inline {
   line-height: 14px;
   color:#c68609;
