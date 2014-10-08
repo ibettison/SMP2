@@ -1,17 +1,23 @@
 <?php
-if(file_exists("ftpConnect.json")) {
-    $connectFtp = json_decode(file_get_contents("ftpConnect.json"));
+if(!defined("ROOT_FOLDER")){
+$root = $_SERVER["DOCUMENT_ROOT"];
+define('ROOT_FOLDER', $root);
+}
+if(file_exists(ROOT_FOLDER."/SMP2/library/includes/ftpConnect.json")) {
+    $connectFtp = json_decode(file_get_contents(ROOT_FOLDER."/SMP2/library/includes/ftpConnect.json"));
     $ftpServer = $connectFtp->ftpServer;
     $ftpUserName = $connectFtp->ftpUserName;
     $ftpPassword = $connectFtp->ftpPassword;
     $ftpSendFolder = $connectFtp->ftpSendFolder;
     $ftpResultFolder = $connectFtp->ftpResultFolder;
+	$ftpArchiveFolder = $connectFtp->ftpArchiveFolder;
 }else{
     $ftpServer = "";
     $ftpUserName = "";
     $ftpPassword = "";
     $ftpSendFolder = "";
     $ftpResultFolder = "";
+	$ftpArchiveFolder = "";
 }
 echo "<div id='newFtpForm' style='display: none; padding-top: 4em;'>";
 //setup the form for submission and validation
@@ -48,13 +54,19 @@ echo "</div>";
 echo "<div class='row'>";
 echo "<div class='six columns'>";
 echo "<div class='field no-icon'>
-                            <input class='input' type='text' placeholder='Enter the folder in which to send samples' id='ftpResultFolder' name='ftpResultFolder' value='$ftpResultFolder'/>
+                            <input class='input' type='text' placeholder='Enter the folder in which to receive samples' id='ftpResultFolder' name='ftpResultFolder' value='$ftpResultFolder'/>
+                          </div>";
+echo "</div>";
+echo "<div class='six columns'>";
+echo "<div class='field no-icon'>
+                            <input class='input' type='text' placeholder='Enter the folder in which to Archive samples ' id='ftpArchiveFolder' name='ftpArchiveFolder' value='$ftpArchiveFolder'/>
                           </div>";
 echo "</div>";
 echo "</div>";
 
 echo "<div class='row'>";
 echo "<div  class='medium rounded metro primary btn'><input id='submit_ftp' type='submit' value='Save Connection' /></div> ";
+echo "<div  class='medium rounded metro primary btn'><input id='close_ftp' type='button' value='Close' /></div> ";
 echo "<p>To check the folders for sending and results it may be necessary to connect via an FTP client.</p>";
 echo "</div>";
 echo "</form>";
@@ -64,6 +76,9 @@ echo"<div id='ftpMessage'></div>";
 echo "</div>";
 ?>
 <script>
+    $('#close_ftp').click(function(){
+        $("#newFtpForm").delay(200).slideUp(900);
+    });
     $('#smp2_ftp').validation({
         // pass an array of required field objects
         required: [
@@ -99,6 +114,12 @@ echo "</div>";
                     return $e.val().length >0;
                 }
             },
+			{
+				name: 'ftpArchiveFolder',
+				validate: function($e) {
+					return $e.val().length >0;
+				}
+			},
         ],
         // callback for failed validation on form submit
         fail: function() {
@@ -113,10 +134,11 @@ echo "</div>";
                 data: data,
                 type: "POST",
                 success: function(data) {
-                    alert("FTP information sent...");
+
+                    $("#ftpMessage").show();
                     $("#ftpMessage").html(data);
-                    $("#ftpMessage").delay(1800).fadeOut(400);
-                    $("#newFtpForm").delay(1200).slideUp(900);
+                    $("#ftpMessage").delay(1200).fadeOut(400);
+                    $("#newFtpForm").delay(1800).slideUp(900);
                 }
             });
         }

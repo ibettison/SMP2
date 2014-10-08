@@ -5,49 +5,10 @@
  * Date: 02/09/14
  * Time: 15:03
  */
-
 //link to database access class and connection
-include                 ("../mysqli_datalayer.php");
-include                 ("../connection.php");
-include                 ("makeXMLFile.Class.php");
-
-//list of file details for table smp2_hub
-$hubFieldNames          = array("h_id", "hubName");
-$hubTable               = "smp2_hub";
-$hubLink                = null;
-$hubCheck               = "hubName";
-$writeTables            = new dbWrite($hubFieldNames, $hubTable, $hubLink, $hubCheck);
-
-//list of file details for table smp2_patients
-$hubTableLink           = $writeTables->get_index(); //this gets the index info from the Hub table
-$patientFieldNames      = array("p_id","h_id","organisationCode","localPatientIdentifier","treatingOncologistInitials",
-    "ageAtAttendance","genderCode","ethnicCategory","smokingStatus","noOfPriorLinesTherapy","cancerTreatmentModality",
-    "performanceStatus");
-$patientTable           = "smp2_patients";
-$patientCheck           = "localPatientIdentifier";
-$writeTables            = new dbWrite($patientFieldNames, $patientTable, $hubTableLink, $patientCheck);
-
-//list of file details for table smp2_samples
-$patientTableLink       = $writeTables->get_index(); //this gets the index info from the Patients table
-$samplesFieldNames      = array("s_id","sourceSampleIdentifier","originOfSample","typeOfSample","procedureToObtainSample", "typeOfBiopsy","dateSampleTaken",
-                        "morphologySnomed","tumourType","pathologyTCategory","pathologyNCategory","pathologyMCategory",
-                        "integratedTNMStageGrouping","alkStatus","egfrStatus","alkFishStatus","krasStatus","dateSampleSent");
-$samplesTable           = "smp2_samples";
-$samplesCheck           = "sourceSampleIdentifier";
-$writeTables            = new dbWrite($samplesFieldNames, $samplesTable, null, $samplesCheck);
-$sampleTableLink        = $writeTables->get_index();
-
-//create the link between the sample table and the patient table
-// this is needed as there may be multiple samples from a patient if there are multiple cancers.
-$createLink = new dbCreateLink($patientTableLink, $sampleTableLink, "smp2_patient_samples", array("patients_id", "samples_id"));
-
-//now lets create the XML File
-makeXML::makeXMLFile($patientTableLink["id"]);
-
-
-
 class dbWrite {
     public $table_link;
+    public $dataWritten;
     function __construct( $fields, $table, $link, $existingRecordCheck ){
         $this->write_data($fields, $table, $link, $existingRecordCheck);
     }
@@ -76,13 +37,12 @@ class dbWrite {
                 }
             }else{
                 //check here if need to create a link to the linked table
-                if($field == $link["indexField"]) {
-                    $values[] = $link["id"];
+                if($field 						== $link["indexField"]) {
+                    $values[] 					= $link["id"];
                 }else{
                     $values[]                   = "";
                 }
             }
-
         }
         $writeLn                                = array_combine($fieldArray, $values);
         $quotes = "";
@@ -90,22 +50,33 @@ class dbWrite {
             $quotes = "'";
         }
         $checkRecordExists                      = dl::select($table,$check."=".$quotes.$_POST[$check].$quotes);
+        $this->doesRecordExist($checkRecordExists, $table, $writeLn, $index);
+    }
+
+    function doesRecordExist($checkRecordExists, $table, $writeLn, $index) {
         if(empty($checkRecordExists)){
             dl::insert($table, $writeLn);
             //capture the index id created after the write to the table
             $lastId                             = dl::getId();
             $this->set_index($table, $index, $lastId);
+            $this->set_dataWritten(true);
         }else{
             echo $table." - record was not updated as the data already exists.<BR>";
             $lastId                             = $checkRecordExists[0][$index];
             $this->set_index($table, $index, $lastId);
+            $this->set_dataWritten(false);
         }
-
     }
 
+    function set_dataWritten ($bool){
+        $this->dataWritten = $bool;
+    }
 
+    function get_dataWritten(){
+        return $this->dataWritten;
+    }
     function set_index ($table, $index, $id) {
-        $this->table_link                       = array("tableName"=>$table, "indexField"=>$index, "id"=>$id);
+		$this->table_link                       = array("tableName"=>$table, "indexField"=>$index, "id"=>$id);
     }
 
     function get_index() {

@@ -12,12 +12,19 @@ class dl {
    }
    
    public static function connect( $server, $uId, $pass, $db ) {
-		self::$mysqli = new mysqli( $server, $uId, $pass, $db);
-		if( self::$mysqli->connect_error) {
-			die('Connection Error: '. self::$mysqli->connect_errno. "(".self::$mysqli->connect_error.")");
+
+	    try{
+			self::$mysqli = @new mysqli( $server, $uId, $pass, $db);
+			if( self::$mysqli->connect_error) {
+				throw new Exception("The connection information provided is either incorrect or has not been entered yet.<BR>
+				select `Settings` and `Set Connection Information` to connect to your database.");
+			}else{
+				self::$database = $db;
+				return true;
+			}
+		}catch(Exception $exception){
+			echo($exception->getMessage());
 		}
-		self::$database = $db;
-		 return true;  
    }
  
    static function getError( ) {
@@ -49,15 +56,21 @@ class dl {
         if (! $result = self::_query( $query ) ) 
         return false;  
       $ret = array();
-	  self::$noRows = 0;
       while ( $row = $result->fetch_assoc() ) {
         $ret[] = $row;
-		self::$noRows++;
 		}
+        self::setNumRows($result);
 		$result->free();
       return $ret;
     }
-  
+
+    private static function setNumRows($result) {
+        self::$noRows = $result->num_rows;
+    }
+
+    static function getNumRows() {
+        return self::$noRows;
+    }
     static function getResource( ) {
       return self::$link;
     }
@@ -95,7 +108,7 @@ class dl {
           $query = "DELETE FROM $table";
 		 $query .= self::_makeWhereList( $condition );  
 		 self::debug( $query );
-          return self::setQuery( $query, $error );
+          return self::setQuery( $query );
     }
 	
    public static function debug( $msg ) {
@@ -144,7 +157,16 @@ class dl {
    	}
 
      public static function closedb() {
-   	self::$mysqli->close();
+		 try{
+			 if(is_object(self::$mysqli)){
+				 if( @self::$mysqli->close) {
+					 throw new Exception('Connection Error: '. self::$mysqli->connect_errno. " (".self::$mysqli->connect_error.")");
+				 }
+			 }
+		 }catch(Exception $exception){
+			 die($exception->getMessage());
+		 }
+
    }	
  }
  ?>

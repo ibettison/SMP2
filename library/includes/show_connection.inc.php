@@ -1,6 +1,10 @@
 <?php
-if(file_exists("connection.json")) {
-    $connectionString = json_decode(file_get_contents("connection.json"));
+if(!defined("ROOT_FOLDER")){
+    $root = $_SERVER["DOCUMENT_ROOT"];
+    define('ROOT_FOLDER', $root);
+}
+if(file_exists(ROOT_FOLDER."/SMP2/library/includes/connection.json")) {
+    $connectionString = json_decode(file_get_contents(ROOT_FOLDER."/SMP2/library/includes/connection.json"));
     $connDB = $connectionString->dbName;
     $connUser = $connectionString->dbUserName;
     $connPass = $connectionString->dbPass;
@@ -96,14 +100,13 @@ echo "</div>";
 // if omitted, form will submit normally
         submit: function(data) {
             $.ajax({
-                url: 'library/classes/dbConnCheck.Class.php?func=create',
+                url: 'library/includes/dbConnCheck.inc.php?func=create',
                 data: data,
                 type: "POST",
                 success: function(data) {
-                    alert("Connection information sent...");
+                    $("#connMessage").show();
                     $("#connMessage").html(data);
-                    $("#connMessage").delay(1800).fadeOut(400);
-                    $("#newConnectionForm").delay(1200).slideUp(900);
+                    $("#connMessage").delay(1200).fadeOut(900);
                 }
             });
         }
@@ -114,7 +117,7 @@ echo "</div>";
         var dbPass = $("#dbPass").val();
         var dbServer = $("#dbServer").val();
         $.ajax({
-            url: 'library/classes/dbConnCheck.Class.php?func=check',
+            url: 'library/includes/dbConnCheck.inc.php?func=check',
             data: {dbName: dbName,
                 dbUserName: dbUserName,
                 dbPass: dbPass,
@@ -122,13 +125,14 @@ echo "</div>";
             },
             type: "POST",
             success: function(data) {
+                $("#connMessage").show();
                 $("#connMessage").html(data);
-                //$("#newConnectionForm").delay(1200).slideUp(900);
+                $("#connMessage").delay(1200).fadeOut(900);
             }
         });
     });
     $("#check_close").click(function(){
         $("#connMessage").html("");
-        $("#newConnectionForm").slideUp(400);
+        $("#newConnectionForm").delay(200).slideUp(900);
     });
 </script>

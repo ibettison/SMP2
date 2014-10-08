@@ -2,7 +2,7 @@
 
 class makeXML {
 
-    static public function makeXMLFile($id) {
+    static public function makeXMLFile($patient_id, $sample_id) {
         $hubName                    = dl::select("smp2_hub");
         $dom                        = new DOMDocument("1.0", "UTF-8");
         $root                       = $dom->createElement('smpSample');
@@ -18,30 +18,36 @@ class makeXML {
         }
         $patient                    = $dom->createElement('patient');
         $patient                    = $hub->appendChild($patient);
-        $patientInfo                = dl::select("smp2_patients", "p_id =".$id." limit 1");
+        $patientInfo                = dl::select("smp2_patients", "p_id =".$patient_id." limit 1");
         foreach($patientInfo as $pInfo) {
         $pInfo                      = array_slice($pInfo, 2);
+
             foreach($pInfo as $pInf=>$values) {
                 if($pInf            == "cancerTreatmentModality"){
-                    $modalities     = explode(",", $values);
-                    $modal          = $dom->createElement('cancerTreatmentModalities');
-                    $patient->appendChild($modal);
-                    foreach($modalities as $modality){
-                    $treatment      = $dom->createElement('cancerTreatmentModality');
-                    $modal->appendChild($treatment);
-                    $treatmentText  = $dom->createTextNode($modality);
-                    $treatment->appendChild($treatmentText);
-                }
+					if(!empty($values)) {
+						$modalities     = explode(",", $values);
+						$modal          = $dom->createElement('cancerTreatmentModalities');
+						$patient->appendChild($modal);
+						foreach($modalities as $modality){
+
+							$treatment      = $dom->createElement('cancerTreatmentModality');
+							$modal->appendChild($treatment);
+							$treatmentText  = $dom->createTextNode($modality);
+							$treatment->appendChild($treatmentText);
+						}
+					}
+
                 }else{
-                    $info           = $dom->createElement($pInf);
-                    $patient->appendChild($info);
-                    $text           = $dom->createTextNode($values);
-                    $info->appendChild($text);
+					if(!empty($values)){
+						$info           = $dom->createElement($pInf);
+						$patient->appendChild($info);
+						$text           = $dom->createTextNode($values);
+						$info->appendChild($text);
+					}
                 }
             }
         }
-        $findSample                 = dl::select("smp2_patient_samples", "patients_id = ".$id);
-        $samplesId                  = $findSample[0]["samples_id"];
+        $samplesId                  = $sample_id;
         $sampleInfo                 = dl::select("smp2_samples", "s_id = ".$samplesId);
         $sample                     = $dom->createElement('sample');
         $root->appendChild($sample);
@@ -50,10 +56,21 @@ class makeXML {
         foreach($sampleInfo as $sInfo){
             $sInfo                  = array_slice($sInfo, 1);
             foreach( $sInfo as $sInf=>$values ) {
-                $info               = $dom->createElement($sInf);
-                $elements->appendChild($info);
-                $text               = $dom->createTextNode($values);
-                $info->appendChild($text);
+             if($sInf               == "morphologySnomed"){
+				if(!empty($values)){
+					$snoMed             = $dom->createElement('morphologySnomed');
+					$elements->appendChild($snoMed);
+					$cdataSection       = $dom->createCDATASection($values);
+					$snoMed->appendChild($cdataSection);
+				}
+             }else{
+				if(!empty($values)){
+					$info               = $dom->createElement($sInf);
+					$elements->appendChild($info);
+					$text               = $dom->createTextNode($values);
+					$info->appendChild($text);
+				}
+             }
             }
         }
         $techHubElements            = $dom->createElement('technologyHubElements');
@@ -84,9 +101,11 @@ class makeXML {
         $dom->save("../../xml-documents/".$fileName);
         //now lets save the filename to the database to retrieve later
         //check to see if the filename has been recorded. The file will over write the existing so should work if there are changes added on the same date
-        $findFile = dl::select("smp2_filename", "filename='".$fileName."'");
+        $findFile = dl::select("smp2_filename", "samples_id=".$samplesId);
         if(empty($findFile)) {
             dl::insert("smp2_filename", array("samples_id"=>$samplesId, "filename"=>$fileName));
-        }
+        }else{
+			dl::update("smp2_filename", array("filename"=>$fileName), "samples_id =".$samplesId);
+		}
     }
 }

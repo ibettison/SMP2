@@ -1,5 +1,5 @@
 <?php
-echo "<div id='newsampleForm' style='display: none; padding-top: 4em;'>";
+echo "<div id='newsampleForm' style=' padding-left: 1.5em; display: none; padding-top: 4em;'>";
 //setup the form for submission and validation
 echo "<form id='smp2_form' action='index.php' method='get'>";
 //start entering the fields to create the XML report
@@ -8,7 +8,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='hubName'>Select Hub Name</label><br />
                 <div class='picker'>
-                    <select name='hubName'>
+                    <select name='hubName' id='hubName'>
                         <option value='#' disabled selected     >Select Hub Name</option>
                         <option value='1 - Birmingham'>1 - Birmingham</option>
                         <option value='2 - Cardiff'>2 - Cardiff</option>
@@ -31,9 +31,14 @@ echo "<div class='row'>";
                     </select>
 
                 </div>";
-                echo "</li></ul>";
-        echo "</div>";
-    echo "</div>";
+			echo "</li></ul>";
+	echo "</div>";
+	echo "<div class='four columns'></div>";
+	echo "<div class='two columns'>";
+	echo "<span id='close-display' style='cursor:pointer;'>CLOSE <img style='vertical-align:middle;' src='img/up-arrow-small.png'  /></span>";
+	echo "</div>";
+echo "</div>";
+
 echo "<div style='clear:both;'></div>";
 
 echo "<div class='row'>";
@@ -43,12 +48,12 @@ echo "<div class='row'>";
 echo "<div class='row'>";
     echo "<div class='six columns'>";
         echo "<div class='field no-icon'>
-            <input class='input' type='text' placeholder='Enter the Organisation Code' name='organisationCode'/>
+            <input class='input' type='text' placeholder='Enter the Organisation Code' name='organisationCode' id='organisationCode'/>
         </div>";
         echo "</div>";
     echo "<div class='six columns'>";
         echo "<div class='field no-icon'>
-            <input class='input' type='text' placeholder='Enter the Patient Identifier' name='localPatientIdentifier'/>
+            <input class='input' type='text' placeholder='Enter the Patient Identifier' name='localPatientIdentifier' id='localPatientIdentifier'/>
         </div>";
         echo "</div>";
     echo "</div>";
@@ -56,12 +61,12 @@ echo "<div class='row'>";
 echo "<div class='row'>";
     echo "<div class='six columns'>";
         echo "<div class='field no-icon'>
-            <input class='input' type='text' placeholder='Enter the Oncologists Initials' name='treatingOncologistInitials'/>
+            <input class='input' type='text' placeholder='Enter the Oncologists Initials' name='treatingOncologistInitials' id='treatingOncologistInitials'/>
         </div>";
         echo "</div>";
     echo "<div class='six columns'>";
         echo "<div class='field no-icon'>
-            <input class='input' type='text' placeholder='Enter the Patients Age' name='ageAtAttendance'/>
+            <input class='input' type='text' placeholder='Enter the Patients Age' name='ageAtAttendance' id='ageAtAttendance'/>
         </div>";
         echo "</div>";
     echo "</div>";
@@ -71,7 +76,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='genderCode'>Select Gender</label><br />
                 <div class='picker'>
-                    <select name='genderCode'>
+                    <select name='genderCode' id='genderCode'>
                         <option value='#' disabled selected>Select Gender</option>
                         <option value='0'>0 - Not Known</option>
                         <option value='1'>1 - Male</option>
@@ -85,7 +90,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='ethnicCategory'>Select Ethnicity</label>
                 <div class='picker'>
-                    <select name='ethnicCategory'>
+                    <select name='ethnicCategory' id='ethnicCategory'>
                         <option value='#' disabled selected>Select Ethnicity</option>
                         <option value='A'>A - White British</option>
                         <option value='B'>B - White Irish</option>
@@ -116,7 +121,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='smokingStatus'>Select Smoking Status</label>
                 <div class='picker'>
-                    <select name='smokingStatus'>
+                    <select name='smokingStatus' id='smokingStatus'>
                         <option value='#' disabled selected>Select Smoking Status</option>
                         <option value='1'>1 - Current smoker</option>
                         <option value='2'>2 - Ex smoker</option>
@@ -131,7 +136,7 @@ echo "<div class='row'>";
 
     echo "<div class='six columns'>";
         echo "<div class='field no-icon'><br />
-            <input class='input' type='text' placeholder='Enter the No. of Prior Therapy Lines (0,1,2,3,4,N/K,N/A)' name='noOfPriorLinesTherapy'/>
+            <input class='input' type='text' placeholder='Enter the No. of Prior Therapy Lines (0,1,2,3,4,N/K,N/A)' name='noOfPriorLinesTherapy' id='noOfPriorLinesTherapy'/>
         </div>";
         echo "</div>";
     echo "</div>";
@@ -161,7 +166,7 @@ echo "<div class='row'>";
     echo "<ul><li class='field'>
             <label class='inline' for='cancerTreatmentModality'>Select Treatment Types (Hold Ctrl to select multiple treatments)</label><BR />
             <div class='picker'>";
-                echo "<select style='height:27.6em;' id='cancerTreatmentModality' name='cancerTreatmentModality[]'  multiple='multiple'>";
+                echo "<select style='height:27.6em;' id='cancerTreatmentModality' name='cancerTreatmentModality[]' multiple='multiple'>";
                     foreach($treatments as $treatment){
                     echo "<option>".$treatment."</option>";
                     }
@@ -175,7 +180,7 @@ echo "<div class='row'>";
     echo "<ul><li class='field'>
             <label class='inline' for='performanceStatus'>Select the patients performance status (WHO)</label>
             <div class='picker'>
-                <select name='performanceStatus'>
+                <select name='performanceStatus' id='performanceStatus'>
                     <option value='#' disabled selected>Select movement status</option>
                     <option value='0'>0 - Able to carry out all normal activity without restriction</option>
                     <option value='1'>1 - Restricted in physically strenuous activity, but able to walk and do light work</option>
@@ -195,14 +200,14 @@ echo "<div class='row'>";
 echo "<div class='row'>";
     echo "<div class='six columns'>";
         echo "<div class='field no-icon'><BR />
-            <input class='input' type='text' placeholder='Enter the Sample ID' name='sourceSampleIdentifier'/>
+            <input class='input' type='text' placeholder='Enter the Sample ID' name='sourceSampleIdentifier' id='sourceSampleIdentifier'/>
         </div>
     </div>";
     echo "<div class='six columns'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='originOfSample'>Select the origin of the Sample</label>
                 <div class='picker'>
-                    <select name='originOfSample'>
+                    <select name='originOfSample' id='originOfSample'>
                         <option value='#' disabled selected>Select sample Origin</option>
                         <option value='1'>Primary tumor</option>
                         <option value='2'>Metastic site - Lymph node</option>
@@ -217,7 +222,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='typeOfSample'>Select the type of sample</label>
                 <div class='picker'>
-                    <select name='typeOfSample'>
+                    <select name='typeOfSample' id='typeOfSample'>
                         <option value='#' disabled selected>Select type of sample</option>
                         <option value='1'>1 - Blood</option>
                         <option value='3'>3 - Tissue- Resection</option>
@@ -239,7 +244,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='procedureToObtainSample'>Select the procedure for obtaining the sample</label>
                 <div class='picker'>
-                    <select name='procedureToObtainSample'>
+                    <select name='procedureToObtainSample' id='procedureToObtainSample'>
                         <option value='#' disabled selected>Select the procedure </option>
                         <option value='1'>1 - CT guided biopsy</option>
                         <option value='2'>2 - US guided biopsy</option>
@@ -260,7 +265,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='typeOfBiopsy'>Select the Type of Biopsy</label>
                 <div class='picker'>
-                    <select name='typeOfBiopsy'>
+                    <select name='typeOfBiopsy' id='typeOfBiopsy'>
                         <option value='#' disabled selected>Select type of Biopsy</option>
                         <option value='0'>0 - unknown</option>
                         <option value='1'>1 - Diagnostic biopsy</option>
@@ -276,7 +281,7 @@ echo "<div class='row'>";
         echo "</div>";
     echo "<div class='six columns'>";
         echo "<div class='field no-icon'><BR />
-            <input class='input' type='date' placeholder='Enter the Date the sample was taken (YYYY-MM-DD)' name='dateSampleTaken'/>
+            <input class='input' type='text' placeholder='Enter the Date the sample was taken (YYYY-MM-DD)' name='dateSampleTaken' id='dateSampleTaken'/>
         </div>
     </div>";
 echo "</div>";
@@ -286,7 +291,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='tumourType'>Select the tumor type</label><BR />
                 <div class='picker'>
-                    <select name='tumourType'>
+                    <select name='tumourType' id='tumourType'>
                         <option value='#' disabled selected>Select tumor type</option>
                         <option value='1'>1 - Breast</option>
                         <option value='2'>2 - Colorectal</option>
@@ -301,7 +306,7 @@ echo "<div class='row'>";
     echo "</div>";
     echo "<div class='six columns'>";
         echo "<div class='field no-icon'><BR />
-            <input class='input' type='text' placeholder='Enter the Morphology SNOMED' name='morphologySnomed'/>
+            <input class='input' type='text' placeholder='Enter the Morphology SNOMED' name='morphologySnomed' id='morphologySnomed'/>
         </div>
     </div>";
 echo "</div>";
@@ -311,7 +316,7 @@ echo "<div class='row'>";
     echo "<ul><li class='field'>
             <label class='inline' for='pathologyTCategory'>Select the pathology T Category</label><BR />
             <div class='picker'>
-                <select name='pathologyTCategory'>
+                <select name='pathologyTCategory' id='pathologyTCategory'>
                     <option value='#' disabled selected>Select T Category</option>
                     <option value='0'>0 - unknown</option>
                     <option value='TX'>TX - Primary tumour cannot be assessed</option>
@@ -337,7 +342,7 @@ echo "<div class='row'>";
     echo "<ul><li class='field'>
             <label class='inline' for='pathologyNCategory'>Select the pathology N Category</label><BR />
             <div class='picker'>
-                <select name='pathologyNCategory'>
+                <select name='pathologyNCategory' id='pathologyNCategory'>
                     <option value='#' disabled selected>Select N Category</option>
                     <option value='0'>0 - unknown </option>
                     <option value='NX'>NX - Regional lymph nodes cannot be assessed</option>
@@ -356,7 +361,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='pathologyMCategory'>Select the pathology M Category</label>
                 <div class='picker'>
-                    <select name='pathologyMCategory'>
+                    <select name='pathologyMCategory' id='pathologyMCategory'>
                         <option value='#' disabled selected>Select M Category</option>
                         <option value='0'>0 - unknown</option>
                         <option value='M0'>M0 - No distant metastasis</option>
@@ -370,7 +375,7 @@ echo "<div class='row'>";
     echo "</div>";
     echo "<div class='six columns'>";
         echo "<div class='field no-icon'><BR />
-            <input class='input' type='text' placeholder='Enter the TNM Stage Grouping' name='integratedTNMStageGrouping'/>
+            <input class='input' type='text' placeholder='Enter the TNM Stage Grouping' name='integratedTNMStageGrouping' id='integratedTNMStageGrouping'/>
             </div>
         </div>";
     //echo "</div>";
@@ -381,7 +386,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='alkStatus'>Select the ALK IHC Status</label><BR />
                 <div class='picker'>
-                    <select name='alkStatus'>
+                    <select name='alkStatus' id='alkStatus'>
                         <option value='#' disabled selected>Select ALK IHC Status</option>
                         <option value='P'>P-positive</option>
                         <option value='N'>N-negative</option>
@@ -397,7 +402,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='egfrStatus'>Select the EGFR Status</label><br/>
                 <div class='picker'>
-                    <select name='egfrStatus'>
+                    <select name='egfrStatus' id='egfrStatus'>
                         <option value='#' disabled selected>Select the EGFR</option>
                         <option value='M'>M-mutation detected</option>
                         <option value='N'>N-no mutation detected</option>
@@ -416,7 +421,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='alkFishStatus'>Select the ALK FISH Status</label><BR />
                 <div class='picker'>
-                    <select name='alkFishStatus'>
+                    <select name='alkFishStatus' id='alkFishStatus'>
                         <option value='#' disabled selected>Select ALK FISH Status</option>
                         <option value='R'>R-rearrangenent detected</option>
                         <option value='N'>N-no rearrangenent detected</option>
@@ -432,7 +437,7 @@ echo "<div class='row'>";
         echo "<ul><li class='field'>
                 <label class='inline' for='krasStatus'>Select the KRAS Status</label><br/>
                 <div class='picker'>
-                    <select name='krasStatus'>
+                    <select name='krasStatus' id='krasStatus'>
                         <option value='#' disabled selected>Select the KRAS</option>
                         <option value='M'>M-mutation detected</option>
                         <option value='N'>N-no mutation detected</option>
@@ -450,13 +455,14 @@ echo "<div class='row'>";
     echo "<div class='six columns'>";
 
         echo "<div class='field no-icon'>
-            <input class='input' type='text' placeholder='Enter the date the sample was sent (YYYY-MM-DD)' name='dateSampleSent'/>
+            <input class='input' type='text' placeholder='Enter the date the sample was sent (YYYY-MM-DD)' name='dateSampleSent' id='dateSampleSent'/>
         </div>
     </div>";
 echo "</div>";
 
 echo "<div class='row'>";
     echo "<div  class='medium rounded metro primary btn'><input id='submit_button' type='submit' value='Save Sample' /></div>";
+    echo " <div  class='medium rounded metro primary btn'><input id='newSampleClose' type='button' value='Close' /></div>";
     echo "</div>";
 echo "</form>";
 echo "<div class='row'>";

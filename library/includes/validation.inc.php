@@ -1,37 +1,33 @@
 <script>
-$("#newSample").click(function(){
-    $("#newsampleForm").slideDown(900);
-});
-$("#setconn").click(function(){
-    $("#newConnectionForm").slideDown(900);
-});
-$("#setftp").click(function(){
-    $("#newFtpForm").slideDown(900);
-});
+//get the query string to then select the type of validation
+
+//set validation variables
+    var hub = {
+        name: 'hubName',
+        validate: function($e) {
+            return $e.val() !== null;
+        }
+    };
+    var orgCode =  {
+        name: 'organisationCode',
+        validate: function($e) {
+            return $e.val().length <= 5 & $e.val().length >0;
+        }
+    };
+    var patID = {
+        name: 'localPatientIdentifier',
+        validate: function($e) {
+            return $e.val().length <= 10 & $e.val().length >0;
+        }
+    };
+
 // initialize plugin
 $('#smp2_form').validation({
     // pass an array of required field objects
     required: [
-        {
-            // name should reference a form inputs name attribute
-            // just passing the name property will default to a check for a present value
-            name: 'hubName',
-            validate: function($e) {
-                return $e.val() !== null;
-            }
-        },
-        {
-            name: 'organisationCode',
-            validate: function($e) {
-                return $e.val().length <= 5 & $e.val().length >0;
-            }
-        },
-        {
-            name: 'localPatientIdentifier',
-            validate: function($e) {
-                return $e.val().length <= 10 & $e.val().length >0;
-            }
-        },
+        hub,
+       orgCode,
+        patID,
         {
             name: 'treatingOncologistInitials',
             validate: function($e) {
@@ -149,7 +145,7 @@ $('#smp2_form').validation({
             }
         },
         {
-            name: 'tumorType',
+            name: 'tumourType',
             validate: function($e) {
                 return $e.val() !== null;
             }
@@ -216,11 +212,12 @@ fail: function() {
 // if omitted, form will submit normally
 submit: function(data) {
     $.ajax({
-        url: 'library/classes/dbWrite.Class.php',
+    	url: <?php echo $url?>,
         data: data,
         type: "POST",
         success: function(data) {
-            alert("Sample Added...");
+            alert("Sample Validated...");
+            $("#message_area").show();
             $("#message_area").html(data);
             $("#message_area").delay(1800).fadeOut(400);
             $("#newsampleForm").delay(1200).slideUp(900);
@@ -230,6 +227,7 @@ submit: function(data) {
                 dataType : 'html',
                 success : function (response) {
                     $("#viewSamples").html(response);
+					window.location.replace("index.php");
                 }
             });
         }

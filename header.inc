@@ -13,12 +13,12 @@
 			 More info: h5bp.com/b/378 -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title>Gumby - A Flexible, Responsive CSS Framework - Powered by SASS</title>
+	<title>SMP2 project for Cancer Research UK - Created by Newcastle University</title>
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="author" content="humans.txt">
 
-	<link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+	<link rel="shortcut icon" href="/SMP2/favicon.ico" type="image/x-icon" />
 
 	<!-- Facebook Metadata /-->
 	<meta property="fb:page_id" content="" />
