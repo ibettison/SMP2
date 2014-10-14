@@ -1,3 +1,9 @@
+<?php
+if(empty($_SESSION["sessionId"])){
+	session_start();
+}
+
+?>
 <script>
 
 $("#newSample").click(function(){
@@ -18,15 +24,18 @@ $("#newSample").click(function(){
 function resetForm($form) {
 	$form.find('select').val('#');
 	$form.find('input:text, input:password, input:file, textarea').val('');
+	$form.find('div').removeClass("danger success");
 	$form.find('input:radio, input:checkbox')
 		.removeAttr('checked').removeAttr('selected');
 }
 
 $("#newSampleClose").click(function(){
+	resetForm($("#newsampleForm"));
 	$("#newsampleForm").slideUp(900);
 });
 
 $("#close-display").click(function(){
+	resetForm($("#newsampleForm"));
 	$("#newsampleForm").slideUp(400);
 });
 
@@ -54,7 +63,7 @@ $("#viewSelected").click(function(){
 		samples.push( $(this).val() );
 	});
 	if(samples.length == 1) {
-		$("#newsampleForm").slideDown(1200);
+		$("#newsampleForm").stop(true, true).slideDown(1200);
 		$.ajax({
 			url: 'library/includes/addValues.inc.php',
 			data: { sampleArray: samples},
@@ -67,6 +76,10 @@ $("#viewSelected").click(function(){
 	}else{
 		alert("You must select only one Sample to view.");
 	}
+})
+
+$("#submit_button").click(function(){
+	$("#smp2_form").submit();
 })
 
 $("#deleteFTPFiles").click(function(){
@@ -136,5 +149,33 @@ $("#sendFTP").click(function(){
 		$("#samplesMessage").delay(1800).fadeOut(400);
 	}
 });
+
+$("#checkResults").click(function(){
+	if(confirm("Are you sure you want to check for any results?")){
+		$.ajax({
+			url: 'library/includes/checkForResults.inc.php',
+			data: {check: true},
+			type: "POST",
+			success: function(data) {
+				$("#samplesMessage").show();
+				$("#samplesMessage").html(data);
+				//$("#samplesMessage").delay(1800).fadeOut(400);
+				//$("#samplesMessage").delay(1200).slideUp(900);
+				$.ajax({
+					type : 'GET',
+					url : 'library/includes/show_samples.inc.php',
+					dataType : 'html',
+					success : function (response) {
+						$("#viewSamples").html(response);
+					}
+				});
+			}
+		});
+	}else{
+		$("#samplesMessage").show();
+		$("#samplesMessage").html("Results will not be checked");
+		$("#samplesMessage").delay(1800).fadeOut(400);
+	}
+})
 
 </script>

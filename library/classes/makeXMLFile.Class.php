@@ -92,12 +92,12 @@ class makeXML {
         }
 
         //create xml document name
-        $today                      = date("Y-m-d");
+        $today                      = date("Ymd");
         $org                        = $patientInfo[0]["organisationCode"];
         $patId                      = $patientInfo[0]["localPatientIdentifier"];
         $sampId                     = $sampleInfo[0]["sourceSampleIdentifier"];
 
-        $fileName                   = $prefix.$today."_".$org."_".$patId."_".$sampId.".xml";
+        $fileName                   = $prefix.$today." ".$org."-".$patId."-".$sampId.".xml";
         $dom->save("../../xml-documents/".$fileName);
         //now lets save the filename to the database to retrieve later
         //check to see if the filename has been recorded. The file will over write the existing so should work if there are changes added on the same date

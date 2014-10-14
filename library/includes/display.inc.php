@@ -1,5 +1,5 @@
 <?php
-echo "<div id='newsampleForm' style=' padding-left: 1.5em; display: none; padding-top: 4em;'>";
+echo "<div id='newsampleForm' style='display: none; padding-top: 4em;'>";
 //setup the form for submission and validation
 echo "<form id='smp2_form' action='index.php' method='get'>";
 //start entering the fields to create the XML report
@@ -461,12 +461,12 @@ echo "<div class='row'>";
 echo "</div>";
 
 echo "<div class='row'>";
-    echo "<div  class='medium rounded metro primary btn'><input id='submit_button' type='submit' value='Save Sample' /></div>";
+    echo "<div  class='medium rounded metro primary btn'><input id='submit_button' type='button' value='Save Sample' /></div>";
     echo " <div  class='medium rounded metro primary btn'><input id='newSampleClose' type='button' value='Close' /></div>";
     echo "</div>";
 echo "</form>";
 echo "<div class='row'>";
     echo "<div id='message_area'></div>";
     echo "</div>";
-
 echo "</div>"; //end div of newsampleform
+

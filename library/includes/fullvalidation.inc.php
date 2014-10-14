@@ -1,57 +1,46 @@
 <script>
-//set validation variables
-var hub = {
-	name: 'hubName',
-	validate: function($e) {
-		return $e.val() !== null;
-	}
-};
-var orgCode =  {
-	name: 'organisationCode',
-	validate: function($e) {
-		return $e.val().length <= 5 & $e.val().length >0;
-	}
-};
-var patID = {
-	name: 'localPatientIdentifier',
-	validate: function($e) {
-		return $e.val().length <= 10 & $e.val().length >0;
-	}
-};
-
-// initialize plugin
-$('#smp2_form').validation({
-	// pass an array of required field objects
-	required: [
-		hub,
-		orgCode,
-		patID,
+//check if this has been loaded already
+	var full_validation = [
+		{
+			name: 'hubName',
+			validate: function($e) {
+				return $e.val() !== null;
+			}
+		},
+		{
+			name: 'organisationCode',
+			validate: function($e) {
+				return $e.val().length <= 5 & $e.val().length >0;
+			}
+		},
+		{
+			name: 'localPatientIdentifier',
+			validate: function($e) {
+				return $e.val().length <= 10 & $e.val().length >0;
+			}
+		},
 		{
 			name: 'treatingOncologistInitials',
 			validate: function($e) {
-				return $e.val().length <= 3;
+				return $e.val().length <= 3 & $e.val().length >0;
 			}
 		},
 		{
 			name: 'ageAtAttendance',
 			validate: function($e) {
-				if($e.val().length >0) {
-					return $.isNumeric($e.val()) & $e.val().length <= 3 & $e.val() <=110;
-				}else{
-					return true;
-				}
+				return $e.val().length > 0 & $.isNumeric($e.val()) & $e.val().length <= 3 & $e.val() <=110;
 			}
 		},
 		{
 			name: 'genderCode',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null
 			}
 		},
 		{
 			name: 'ethnicCategory',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null
 			}
 		},
 		{
@@ -72,7 +61,7 @@ $('#smp2_form').validation({
 							return false;
 					}
 				}else{
-					return true;
+					return false;
 				}
 			}
 		},
@@ -97,31 +86,31 @@ $('#smp2_form').validation({
 		{
 			name: 'smokingStatus',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		},
 		{
 			name: 'cancerTreatmentModality',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		},
 		{
 			name: 'performanceStatus',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !=="#" & $e.val() !== null;
 			}
 		},
 		{
 			name: 'procedureToObtainSample',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		},
 		{
 			name: 'originOfSample',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		},
 		{
@@ -139,7 +128,7 @@ $('#smp2_form').validation({
 		{
 			name: 'typeOfBiopsy',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		},
 		{
@@ -151,19 +140,19 @@ $('#smp2_form').validation({
 		{
 			name: 'pathologyTCategory',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		},
 		{
 			name: 'pathologyNCategory',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		},
 		{
 			name: 'pathologyMCategory',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		},
 		{
@@ -172,64 +161,34 @@ $('#smp2_form').validation({
 				if($e.val().length >0) {
 					return $e.val().length <= 5;
 				}else{
-					return true;
+					return false;
 				}
 			}
 		},
 		{
 			name: 'alkStatus',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		},
 		{
 			name: 'egfrStatus',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		},
 		{
 			name: 'alkFishStatus',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		},
 		{
 			name: 'krasStatus',
 			validate: function($e) {
-				return $e.val() !== "#";
+				return $e.val() !== null;
 			}
 		}
-	],
-	// callback for failed validation on form submit
-	fail: function() {
-		alert("Form validation failed");
-		Gumby.error('Form validation failed');
-	},
-// callback for successful validation on form submit
-// if omitted, form will submit normally
-	submit: function(data) {
-		$.ajax({
-			url: 'library/includes/dbWrite.inc.php',
-			data: data,
-			type: "POST",
-			success: function(data) {
-				alert("Sample Validated...");
-				$("#message_area").show();
-				$("#message_area").html(data);
-				//$("#message_area").delay(1800).fadeOut(400);
-				//$("#newsampleForm").delay(1200).slideUp(900);
-				$.ajax({
-					type : 'GET',
-					url : 'library/includes/show_samples.inc.php',
-					dataType : 'html',
-					success : function (response) {
-						$("#viewSamples").html(response);
-					}
-				});
-			}
-		});
-	}
-});
+	];
 
 </script>

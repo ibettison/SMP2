@@ -21,7 +21,7 @@ echo "<a class='toggle' gumby-trigger='#nav1 > ul' href='#'><i class='icon-menu'
           <li><a href='#' id='sendFTP'>Send Selected via sFTP</a></li>
           <li><a href='#' id='viewSelected'>View/Edit Selected</a></li>
           <li><a href='#' id='deleteFTPFiles'>Delete Selected</a></li>
-          <li><a href='#'>Check for Results</a></li>
+          <li><a href='#' id='checkResults'>Check for Results</a></li>
         </ul>
       </div>
     </li>
@@ -48,9 +48,12 @@ echo "<div class='row'>";
 echo "</div>";
 /*The bottom spacing to show that the page has ended*/
 echo "<div class='bottom_spacer'>";
-echo "<div class='bottom_image'><img src='img/cancerresearchuk.png' /></div>";
-echo "<div class='bottom_signature'>Coding by Ian Bettison (Newcastle University)</div>";
+echo "<div class='bottom_image left'><img src='img/nu_logo.png' style='max-width:100%; max-height: 100%;' /></div>";
+echo "<div class='bottom_image left'><img src='img/ecmc_logo.png' style='max-width:100%; max-height: 100%;'  /></div>";
+echo "<div class='bottom_image'><img src='img/cancerresearchuk.png' style='max-width:100%; max-height: 100%;'  /></div>";
 echo "</div>";
-
+echo "<div class='bottom_surround'>";
+echo "<div class='bottom_signature'><a href='mailto:ian.bettison@ncl.ac.uk'>Coding by Ian Bettison</a> (Newcastle University)</div>";
+echo "</div>";
 
 

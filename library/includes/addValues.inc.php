@@ -104,34 +104,35 @@ try{
         $("#localPatientIdentifier")        .val("<?php echo $viewRecord[0]["localPatientIdentifier"]?>");
         $("#treatingOncologistInitials")    .val("<?php echo $viewRecord[0]["treatingOncologistInitials"]?>");
         $("#ageAtAttendance")               .val("<?php echo $viewRecord[0]["ageAtAttendance"]?>");
-        $("#genderCode")                    .val("<?php echo $viewRecord[0]["genderCode"]?>");
-        $("#ethnicCategory")                .val("<?php echo $viewRecord[0]["ethnicCategory"]?>");
-        $("#smokingStatus")                 .val("<?php echo $viewRecord[0]["smokingStatus"]?>");
+        $("#genderCode")                    .val("<?php echo empty($viewRecord[0]["genderCode"]) 				? "#" : $viewRecord[0]["genderCode"] ?>");
+        $("#ethnicCategory")                .val("<?php echo empty($viewRecord[0]["ethnicCategory"]) 			? "#" : $viewRecord[0]["ethnicCategory"] ?>");
+        $("#smokingStatus")                 .val("<?php echo empty($viewRecord[0]["smokingStatus"]) 			? "#" : $viewRecord[0]["smokingStatus"] ?>");
         $("#noOfPriorLinesTherapy")         .val("<?php echo $viewRecord[0]["noOfPriorLinesTherapy"]?>");
-        $("#performanceStatus")             .val("<?php echo $viewRecord[0]["performanceStatus"]?>");
+        $("#performanceStatus")             .val("<?php echo empty($viewRecord[0]["performanceStatus"]) 		? "#" : $viewRecord[0]["performanceStatus"] ?>");
         $("#sourceSampleIdentifier")        .val("<?php echo $viewRecord[0]["sourceSampleIdentifier"]?>");
-        $("#originOfSample")                .val("<?php echo $viewRecord[0]["originOfSample"]?>");
-        $("#typeOfSample")                  .val("<?php echo $viewRecord[0]["typeOfSample"]?>");
-        $("#procedureToObtainSample")       .val("<?php echo $viewRecord[0]["procedureToObtainSample"]?>");
-        $("#typeOfBiopsy")                  .val("<?php echo $viewRecord[0]["typeOfBiopsy"]?>");
+        $("#originOfSample")                .val("<?php echo empty($viewRecord[0]["originOfSample"]) 			? "#" : $viewRecord[0]["originOfSample"] ?>");
+        $("#typeOfSample")                  .val("<?php echo empty($viewRecord[0]["typeOfSample"]) 				? "#" : $viewRecord[0]["typeOfSample"] ?>");
+        $("#procedureToObtainSample")       .val("<?php echo empty($viewRecord[0]["procedureToObtainSample"]) 	? "#" : $viewRecord[0]["procedureToObtainSample"] ?>");
+        $("#typeOfBiopsy")                  .val("<?php echo empty($viewRecord[0]["typeOfBiopsy"])				? "#" : $viewRecord[0]["typeOfBiopsy"] ?>");
         $("#dateSampleTaken")               .val("<?php echo $viewRecord[0]["dateSampleTaken"]?>");
-        $("#tumourType")                    .val("<?php echo $viewRecord[0]["tumourType"]?>");
+        $("#tumourType")                    .val("<?php echo empty($viewRecord[0]["tumourType"])				? "#" : $viewRecord[0]["tumourType"] ?>");
         $("#morphologySnomed")              .val("<?php echo $viewRecord[0]["morphologySnomed"]?>");
-        $("#pathologyTCategory")            .val("<?php echo $viewRecord[0]["pathologyTCategory"]?>");
-        $("#pathologyNCategory")            .val("<?php echo $viewRecord[0]["pathologyNCategory"]?>");
-        $("#pathologyMCategory")            .val("<?php echo $viewRecord[0]["pathologyMCategory"]?>");
+        $("#pathologyTCategory")            .val("<?php echo empty($viewRecord[0]["pathologyTCategory"])		? "#" : $viewRecord[0]["pathologyTCategory"] ?>");
+        $("#pathologyNCategory")            .val("<?php echo empty($viewRecord[0]["pathologyNCategory"])		? "#" : $viewRecord[0]["pathologyNCategory"] ?>");
+        $("#pathologyMCategory")            .val("<?php echo empty($viewRecord[0]["pathologyMCategory"])		? "#" : $viewRecord[0]["pathologyMCategory"] ?>");
         $("#integratedTNMStageGrouping")    .val("<?php echo $viewRecord[0]["integratedTNMStageGrouping"]?>");
-        $("#alkStatus")                     .val("<?php echo $viewRecord[0]["alkStatus"]?>");
-        $("#egfrStatus")                    .val("<?php echo $viewRecord[0]["egfrStatus"]?>");
-        $("#alkFishStatus")                 .val("<?php echo $viewRecord[0]["alkFishStatus"]?>");
-        $("#krasStatus")                    .val("<?php echo $viewRecord[0]["krasStatus"]?>");
+        $("#alkStatus")                     .val("<?php echo empty($viewRecord[0]["alkStatus"])					? "#" : $viewRecord[0]["alkStatus"] ?>");
+        $("#egfrStatus")                    .val("<?php echo empty($viewRecord[0]["egfrStatus"])				? "#" : $viewRecord[0]["egfrStatus"] ?>");
+        $("#alkFishStatus")                 .val("<?php echo empty($viewRecord[0]["alkFishStatus"])				? "#" : $viewRecord[0]["alkFishStatus"] ?>");
+        $("#krasStatus")                    .val("<?php echo empty($viewRecord[0]["krasStatus"])				? "#" : $viewRecord[0]["krasStatus"] ?>");
         $("#dateSampleSent")                .val("<?php echo $viewRecord[0]["dateSampleSent"]?>");
         </script>
         <?php
-		$_SESSION["fieldValues"] = array(	"hubName"=>$viewRecord[0]["hubName"],
+		$_SESSION["fieldValues"] 			= array(	"hubName"=>$viewRecord[0]["hubName"],
 											"localPatientIdentifier"=>$viewRecord[0]["localPatientIdentifier"],
 											"organisationCode"=>$viewRecord[0]["organisationCode"],
 											"sourceSampleIdentifier"=>$viewRecord[0]["sourceSampleIdentifier"]);
+		$_SESSION["sampleStatus"]			= $viewRecord[0]["status"];
     }
 }catch (Exception $exception) {
     dl::closedb();
