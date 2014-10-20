@@ -190,5 +190,38 @@
 			}
 		}
 	];
-
+	// initialize plugin
+	$('#smp2_form').validation({
+		// pass an array of required field objects
+		required: full_validation,
+		// callback for failed validation on form submit
+		fail: function() {
+			alert("Form validation failed");
+			Gumby.error('Form validation failed');
+		},
+		// callback for successful validation on form submit
+		// if omitted, form will submit normally
+		submit: function(data) {
+			$.ajax({
+				url: <?php echo $url?>,
+				data: data,
+				type: "POST",
+				success: function(data) {
+					alert("Sample Validated...");
+					$("#message_area").show();
+					$("#message_area").html(data);
+					//$("#message_area").delay(1800).fadeOut(400);
+					//$("#newsampleForm").delay(1200).slideUp(900);
+					$.ajax({
+						type : 'GET',
+						url : 'library/includes/show_samples.inc.php',
+						dataType : 'html',
+						success : function (response) {
+							$("#viewSamples").html(response);
+						}
+					});
+				}
+			});
+		}
+	});
 </script>

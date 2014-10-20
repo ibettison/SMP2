@@ -7,36 +7,35 @@ if(empty($_SESSION["sessionId"])){
 <script>
 
 $("#newSample").click(function(){
-	resetForm($("#newsampleForm"));
-	var valType = "initial";
 	$.ajax({
-		url: 'library/includes/setValidation.inc.php',
-		data: {valType: valType},
+		url: 'library/includes/statusCheck.inc.php',
+		data: {sampleArray: "New"},
 		type: "POST",
 		success: function(data) {
-			$("#samplesMessage").show();
-			$("#samplesMessage").html(data);
+			var objData = $.parseJSON(data);
+			var status = objData[0].status;
+			$.ajax({
+				url: 'library/includes/setValidation.inc.php',
+				data: {sampleStatus: status},
+				type: "POST",
+				success: function(data) {
+					$("#samplesMessage").show();
+					$("#samplesMessage").html(data);
+				}
+			});
+			$.ajax({
+				url: 'library/includes/display.inc.php',
+				data: {},
+				type: "POST",
+				success: function(data) {
+					$("#newsampleForm").html(data);
+				}
+			});
+			$("#newsampleForm").slideDown(500);
 		}
 	});
-	$("#newsampleForm").slideDown(900);
-});
 
-function resetForm($form) {
-	$form.find('select').val('#');
-	$form.find('input:text, input:password, input:file, textarea').val('');
-	$form.find('div').removeClass("danger success");
-	$form.find('input:radio, input:checkbox')
-		.removeAttr('checked').removeAttr('selected');
-}
 
-$("#newSampleClose").click(function(){
-	resetForm($("#newsampleForm"));
-	$("#newsampleForm").slideUp(900);
-});
-
-$("#close-display").click(function(){
-	resetForm($("#newsampleForm"));
-	$("#newsampleForm").slideUp(400);
 });
 
 $("#setconn").click(function(){
@@ -48,38 +47,54 @@ $("#setftp").click(function(){
 });
 
 $("#viewSelected").click(function(){
-	var valType = "edit";
-	$.ajax({
-		url: 'library/includes/setValidation.inc.php',
-		data: { valType: valType},
-		type: "POST",
-		success: function(data) {
-			$("#samplesMessage").show();
-			$("#samplesMessage").html(data);
-		}
-	});
 	var samples=[];
 	$("input[type=checkbox]:checked").each ( function() {
 		samples.push( $(this).val() );
 	});
 	if(samples.length == 1) {
-		$("#newsampleForm").stop(true, true).slideDown(1200);
-		$.ajax({
-			url: 'library/includes/addValues.inc.php',
-			data: { sampleArray: samples},
-			type: "POST",
+		$.ajax( {
+		url: 'library/includes/statusCheck.inc.php',
+		data: {sampleArray: samples},
+		type: "POST",
 			success: function(data) {
-				$("#samplesMessage").show();
-				$("#samplesMessage").html(data);
+				var objData = $.parseJSON(data);
+				var status = objData[0].status;
+				$.ajax({
+					url: 'library/includes/setValidation.inc.php',
+					data: { sampleStatus: status},
+					type: "POST",
+					success: function(data) {
+						$("#samplesMessage").show();
+						$("#samplesMessage").html(data);
+					}
+				});
+
+				$.ajax({
+
+					url: 'library/includes/display.inc.php',
+					data: {},
+					type: "POST",
+					success: function(data) {
+						$("#newsampleForm").html(data);
+					}
+				});
+
+				$("#newsampleForm").slideDown(900);
+				$.ajax({
+					url: 'library/includes/addValues.inc.php',
+					data: { sampleArray: samples},
+					type: "POST",
+					success: function(data) {
+						$("#samplesMessage").show();
+						$("#samplesMessage").html(data);
+					}
+				});
 			}
 		});
+
 	}else{
 		alert("You must select only one Sample to view.");
 	}
-})
-
-$("#submit_button").click(function(){
-	$("#smp2_form").submit();
 })
 
 $("#deleteFTPFiles").click(function(){

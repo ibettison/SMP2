@@ -35,14 +35,14 @@ echo "<div class='row'>";
                         $icon = "&#128228"; // uploaded icon
                         $colour = "#EBBF7A";
                         break;
-					case "Edited":
-						$icon = "&#9998"; // uploaded icon
-						$colour = "#854403";
-						break;
                     case "Results Received":
                         $icon = "&#128229"; // downloaded icon
                         $colour = "#FCAD00";
                         break;
+					case "Ready to Archive":
+						$icon = "&#9873"; // downloaded icon
+						$colour = "#665CD1";
+						break;
                     case "Results Archived":
                         $icon = "&#10003"; // tick icon
                         $colour = "#2FE035";

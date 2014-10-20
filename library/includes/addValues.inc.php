@@ -8,15 +8,15 @@ if(!defined("ROOT_FOLDER")){
     define('ROOT_FOLDER', $root);
 }
 include_once(ROOT_FOLDER."/SMP2/library/includes/mysqli_datalayer.php");
-$connect = json_decode(file_get_contents(ROOT_FOLDER."/SMP2/library/includes/connection.json"));
-if(!$conn = dl::connect($connect->dbServer, $connect->dbUserName, $connect->dbPass, $connect->dbName)) {
+$connect 		= json_decode(file_get_contents(ROOT_FOLDER."/SMP2/library/includes/connection.json"));
+if(!$conn 		= dl::connect($connect->dbServer, $connect->dbUserName, $connect->dbPass, $connect->dbName)) {
 	die("Cannot connect to the database");
 }
 //check status of the sample to edit.
 
-$checkSample = dl::select("smp2_samples", "sourceSampleIdentifier = '".$_POST["sampleArray"][0]."'" );
-$beenSent = dl::select("smp2_status", "samples_id =".$checkSample[0]["s_id"]);
-$fileName = dl::select("smp2_filename", "samples_id =".$checkSample[0]["s_id"]);
+$checkSample 	= dl::select("smp2_samples", "sourceSampleIdentifier = '".$_POST["sampleArray"][0]."'" );
+$beenSent 		= dl::select("smp2_status", "samples_id =".$checkSample[0]["s_id"]);
+$fileName 		= dl::select("smp2_filename", "samples_id =".$checkSample[0]["s_id"]);
 //check the status so that the location can be checked if needed
 if(!empty($beenSent)){
 	if($beenSent[0]["status"] == "Sent to TH"){
@@ -47,6 +47,7 @@ $sql = "select * from smp2_samples as s
         left outer join smp2_status as st on (st.samples_id=s.s_id)
         where sourceSampleIdentifier = '".$_POST["sampleArray"][0]."'";
 $viewRecord = dl::getQuery($sql);
+
 try{
     if(empty($viewRecord)) {
         throw new Exception("Cannot find the information you requested");
@@ -104,22 +105,22 @@ try{
         $("#localPatientIdentifier")        .val("<?php echo $viewRecord[0]["localPatientIdentifier"]?>");
         $("#treatingOncologistInitials")    .val("<?php echo $viewRecord[0]["treatingOncologistInitials"]?>");
         $("#ageAtAttendance")               .val("<?php echo $viewRecord[0]["ageAtAttendance"]?>");
-        $("#genderCode")                    .val("<?php echo empty($viewRecord[0]["genderCode"]) 				? "#" : $viewRecord[0]["genderCode"] ?>");
+        $("#genderCode")                    .val("<?php echo $viewRecord[0]["genderCode"] == null 				? "#" : $viewRecord[0]["genderCode"] ?>");
         $("#ethnicCategory")                .val("<?php echo empty($viewRecord[0]["ethnicCategory"]) 			? "#" : $viewRecord[0]["ethnicCategory"] ?>");
         $("#smokingStatus")                 .val("<?php echo empty($viewRecord[0]["smokingStatus"]) 			? "#" : $viewRecord[0]["smokingStatus"] ?>");
         $("#noOfPriorLinesTherapy")         .val("<?php echo $viewRecord[0]["noOfPriorLinesTherapy"]?>");
-        $("#performanceStatus")             .val("<?php echo empty($viewRecord[0]["performanceStatus"]) 		? "#" : $viewRecord[0]["performanceStatus"] ?>");
+        $("#performanceStatus")             .val("<?php echo $viewRecord[0]["performanceStatus"] == null 		? "#" : $viewRecord[0]["performanceStatus"] ?>");
         $("#sourceSampleIdentifier")        .val("<?php echo $viewRecord[0]["sourceSampleIdentifier"]?>");
         $("#originOfSample")                .val("<?php echo empty($viewRecord[0]["originOfSample"]) 			? "#" : $viewRecord[0]["originOfSample"] ?>");
         $("#typeOfSample")                  .val("<?php echo empty($viewRecord[0]["typeOfSample"]) 				? "#" : $viewRecord[0]["typeOfSample"] ?>");
         $("#procedureToObtainSample")       .val("<?php echo empty($viewRecord[0]["procedureToObtainSample"]) 	? "#" : $viewRecord[0]["procedureToObtainSample"] ?>");
-        $("#typeOfBiopsy")                  .val("<?php echo empty($viewRecord[0]["typeOfBiopsy"])				? "#" : $viewRecord[0]["typeOfBiopsy"] ?>");
+        $("#typeOfBiopsy")                  .val("<?php echo $viewRecord[0]["typeOfBiopsy"] == null				? "#" : $viewRecord[0]["typeOfBiopsy"] ?>");
         $("#dateSampleTaken")               .val("<?php echo $viewRecord[0]["dateSampleTaken"]?>");
         $("#tumourType")                    .val("<?php echo empty($viewRecord[0]["tumourType"])				? "#" : $viewRecord[0]["tumourType"] ?>");
         $("#morphologySnomed")              .val("<?php echo $viewRecord[0]["morphologySnomed"]?>");
-        $("#pathologyTCategory")            .val("<?php echo empty($viewRecord[0]["pathologyTCategory"])		? "#" : $viewRecord[0]["pathologyTCategory"] ?>");
-        $("#pathologyNCategory")            .val("<?php echo empty($viewRecord[0]["pathologyNCategory"])		? "#" : $viewRecord[0]["pathologyNCategory"] ?>");
-        $("#pathologyMCategory")            .val("<?php echo empty($viewRecord[0]["pathologyMCategory"])		? "#" : $viewRecord[0]["pathologyMCategory"] ?>");
+        $("#pathologyTCategory")            .val("<?php echo $viewRecord[0]["pathologyTCategory"] == null		? "#" : $viewRecord[0]["pathologyTCategory"] ?>");
+        $("#pathologyNCategory")            .val("<?php echo $viewRecord[0]["pathologyNCategory"] == null		? "#" : $viewRecord[0]["pathologyNCategory"] ?>");
+        $("#pathologyMCategory")            .val("<?php echo $viewRecord[0]["pathologyMCategory"] == null		? "#" : $viewRecord[0]["pathologyMCategory"] ?>");
         $("#integratedTNMStageGrouping")    .val("<?php echo $viewRecord[0]["integratedTNMStageGrouping"]?>");
         $("#alkStatus")                     .val("<?php echo empty($viewRecord[0]["alkStatus"])					? "#" : $viewRecord[0]["alkStatus"] ?>");
         $("#egfrStatus")                    .val("<?php echo empty($viewRecord[0]["egfrStatus"])				? "#" : $viewRecord[0]["egfrStatus"] ?>");

@@ -13,6 +13,7 @@ if(!$conn = dl::connect($connect->dbServer, $connect->dbUserName, $connect->dbPa
 }
 
 include                 (ROOT_FOLDER."/SMP2/library/classes/makeXMLFile.Class.php");
+include                 (ROOT_FOLDER."/SMP2/library/classes/makeArchivedXMLFile.Class.php");
 include                 (ROOT_FOLDER."/SMP2/library/classes/dbWrite.Class.php");
 include                 (ROOT_FOLDER."/SMP2/library/classes/dbUpdate.Class.php");
 
@@ -27,6 +28,9 @@ try{
 	}
 	if($_SESSION["fieldValues"]["sourceSampleIdentifier"] !== $_POST["sourceSampleIdentifier"]) {
 		throw new Exception("The sample ID cannot be changed. Please delete this sample and recreate it and inform the TH of the change ASAP.");
+	}
+	if($_SESSION["sampleStatus"] == "Ready to Archive" or $_SESSION["sampleStatus"] == "Archived"){
+		throw new Exception("The status of this record `".$_SESSION["sampleStatus"]."` does not allow further editing.");
 	}
 }catch(Exception $exception){
 	die($exception->getMessage());
@@ -65,6 +69,13 @@ $sampleTableLink        = $writeTables->get_index();
 
 if($writeTables->get_dataWritten()) { //has the samples data table been written to?
     //now lets create the XML File
-    makeXML::makeXMLFile($patientTableLink["id"], $sampleTableLink["id"]);
+	if(!isset($writeTables->statusChange)){
+		$makeXML = new makeXML();
+		$makeXML->makeXMLFile($patientTableLink["id"], $sampleTableLink["id"]);
+	}elseif($writeTables->statusChange){
+		$makeXML = new makeArchiveXML();
+		$makeXML->makeXMLFile($patientTableLink["id"], $sampleTableLink["id"]);
+	}
+
 }
 dl::closedb();

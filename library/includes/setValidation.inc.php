@@ -1,26 +1,29 @@
 <?php
-if(empty($_SESSION["sessionId"])){
-	session_start();
-}
+error_reporting(E_ALL);
 if(!defined("ROOT_FOLDER")){
 	$root = $_SERVER["DOCUMENT_ROOT"];
 	define('ROOT_FOLDER', $root);
 }
-if($_POST["valType"]!== "initial"){
-	$url = "'library/includes/dbUpdate.inc.php'";
+
+include_once(ROOT_FOLDER."/SMP2/library/includes/mysqli_datalayer.php");
+$connect 			= json_decode(file_get_contents(ROOT_FOLDER."/SMP2/library/includes/connection.json"));
+if(!$conn 			= dl::connect($connect->dbServer, $connect->dbUserName, $connect->dbPass, $connect->dbName)) {
+	die("Cannot connect to the database");
+}
+
+if($_POST["sampleStatus"]!== "New"){
+	$url 			= "'library/includes/dbUpdate.inc.php'";
 }else{
-	$_SESSION["sampleStatus"]= "New";
-	$url = "'library/includes/dbWrite.inc.php'";
-	if(!in_array(ROOT_FOLDER."/SMP2/library/includes/validation.inc.php", get_included_files())){
-		require_once(ROOT_FOLDER."/SMP2/library/includes/validation.inc.php");
-	}
-
+	$url 			= "'library/includes/dbWrite.inc.php'";
 }
-
-if($_SESSION["sampleStatus"] == "Results Received") {
-	if(!in_array(ROOT_FOLDER."/SMP2/library/includes/fullvalidation.inc.php", get_included_files())){
-		require_once(ROOT_FOLDER."/SMP2/library/includes/fullvalidation.inc.php");
-	}
+if($_POST["sampleStatus"] == "New" or $_POST["sampleStatus"] == "Sent to TH" or $_POST["sampleStatus"] == "Not Sent"){
+	require_once(ROOT_FOLDER."/SMP2/library/includes/validation.inc.php");
+}elseif($_POST["sampleStatus"] == "Results Received" or $_POST["sampleStatus"] == "Ready to Archive"){
+	require_once(ROOT_FOLDER."/SMP2/library/includes/fullvalidation.inc.php");
+	?>
+	<script>
+		$("#viewResults").show();
+	</script>
+<?php
 }
-
-var_dump(get_included_files());
+dl::closedb();

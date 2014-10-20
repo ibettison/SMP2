@@ -36,7 +36,7 @@ echo "<a class='toggle' gumby-trigger='#nav1 > ul' href='#'><i class='icon-menu'
   </ul>
 </div>";
 echo "</div>";
-include("library/includes/display.inc.php");
+include("library/includes/show_display.inc.php");
 include("library/includes/connection.inc.php");
 include("library/includes/ftpConnection.inc.php");
 include("library/includes/samples.inc.php");

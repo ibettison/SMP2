@@ -17,6 +17,14 @@ class deleteSamples extends sendSamples{
         $local = NET_SFTP_LOCAL_FILE;
         foreach($processFiles as $files) {
             try {
+				//check the status of this sample to see if it can be deleted
+				$canBeDeleted = dl::select("smp2_status", "samples_id = ".$files["sampleID"]);
+				if(!empty($canBeDeleted)){
+					if($canBeDeleted[0]["status"] == "Results Received" or $canBeDeleted[0]["status"] == "Ready to Archive"
+						or $canBeDeleted[0]["status"] == "Archived"){
+						throw new Exception("The status of this record prevents its deletion. Record deletion is not possible!");
+					}
+				}
                 //lets check to see if the file has not been sent yet.
                 if(file_exists(ROOT_FOLDER."/SMP2/xml-documents/".$files["fileName"])){
                     if(unlink(ROOT_FOLDER."/SMP2/xml-documents/".$files["fileName"])) { //delete the unsent file

@@ -1703,3 +1703,17 @@ table tr td, table tbody tr td { font-size: 14px; font-weight: 100; padding: 0px
 .bottom_signature a:link { color: #afafaf; text-decoration: underline; }
 
 .bottom_signature a:hover { color: #3f3f3f; }
+
+.table_class thead tr th { font-size: 0.75em; font-weight: normal; vertical-align: bottom; }
+
+.table_class td { font-size: 0.75em; }
+
+#backgroundPopup { z-index: 1; position: fixed; display: none; height: 100%; width: 100%; background: #000000; top: 0px; left: 0px; }
+
+#toPopup { font-family: "lucida grande",tahoma,verdana,arial,sans-serif; background: none repeat scroll 0 0 #FFFFFF; border: 10px solid #ccc; border-radius: 3px 3px 3px 3px; color: #333333; display: none; font-size: 14px; left: 10%; position: fixed; top: 10%; width: 80%; z-index: 9999; }
+
+div.loader { background: url("../img/loading.gif") no-repeat scroll 0 0 transparent; height: 32px; width: 32px; display: none; z-index: 9999; top: 40%; left: 50%; position: absolute; margin-left: -10px; }
+
+div.close { background: url("../img/closebox.png") no-repeat scroll 0 0 transparent; cursor: pointer; height: 30px; position: absolute; right: -27px; top: -24px; width: 30px; }
+
+div#popup_content { margin: 4px 7px; overflow-y: scroll; height: 500px; }

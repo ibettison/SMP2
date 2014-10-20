@@ -201,11 +201,7 @@
 	// initialize plugin
 	$('#smp2_form').validation({
 		// pass an array of required field objects
-		required:<?php if($_SESSION["sampleStatus"] !== "Results Received") {
-			echo "new_validation";
-		}else{
-			echo "full_validation";
-		}?>,
+		required: new_validation,
 		// callback for failed validation on form submit
 	fail: function() {
 		alert("Form validation failed");
@@ -222,31 +218,19 @@
 				alert("Sample Validated...");
 				$("#message_area").show();
 				$("#message_area").html(data);
-				$("#message_area").delay(1800).fadeOut(400);
-				$("#newsampleForm").delay(1200).slideUp(900);
+				//$("#message_area").delay(1800).fadeOut(400);
+				//$("#newsampleForm").delay(1200).slideUp(900);
 				$.ajax({
 					type : 'GET',
 					url : 'library/includes/show_samples.inc.php',
 					dataType : 'html',
 					success : function (response) {
 						$("#viewSamples").html(response);
-						location.reload();
+
 					}
 				});
 			}
 		});
 	}
 	});
-
-function addRules(rulesObj){
-	for (var item in rulesObj){
-		$('#'+item).rules('add',rulesObj[item]);
-	}
-}
-
-function removeRules(rulesObj){
-	for (var item in rulesObj){
-		$('#'+item).rules('remove');
-	}
-}
 </script>
