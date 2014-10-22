@@ -7,3 +7,5 @@ The system was written by Newcastle University to manage the transimission of XM
 The system manages the transfer of the data and captures the results that are uploaded to the sFTP repository, saving the details into a database and providing the means to capture the full Patient and Sample detail subsequently archiving the details at the Technical Hub upon data validation and the completion of the above data.
 
 Gumby 2 is used as the PHP framework.
+
+The PHPSECLIB application is incorporated into this project to manage the secure connection to the sFTP server and the transfer of the files. 
