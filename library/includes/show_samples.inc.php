@@ -43,7 +43,7 @@ echo "<div class='row'>";
 						$icon = "&#9873"; // downloaded icon
 						$colour = "#665CD1";
 						break;
-                    case "Results Archived":
+                    case "Archived":
                         $icon = "&#10003"; // tick icon
                         $colour = "#2FE035";
                         break;

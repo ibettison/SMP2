@@ -30,18 +30,50 @@ echo "<a class='toggle' gumby-trigger='#nav1 > ul' href='#'><i class='icon-menu'
         <ul>
           <li><a href='#' id='setconn'>Set connection information</a></li>
           <li><a href='#' id='setftp'>Ftp Settings</a></li>
+          <li><a href='#' id='setpw'>Set/Reset Password</a></li>
         </ul>
       </div>
+    </li>
+     <li><a href='#' id='html_logout'  ><img src='img/exit.png' title='Logout' alt='Logout' /></a>
     </li>
   </ul>
 </div>";
 echo "</div>";
-include("library/includes/show_display.inc.php");
-include("library/includes/connection.inc.php");
-include("library/includes/ftpConnection.inc.php");
-include("library/includes/samples.inc.php");
-include("library/includes/dialogBox.inc.php");
-include("library/includes/ajax.inc.php");
+if(isset($_SESSION["LOGGED_IN"])) {
+	include("library/includes/show_display.inc.php");
+	include("library/includes/connection.inc.php");
+	include("library/includes/ftpConnection.inc.php");
+	include("library/includes/show_password.inc.php");
+	include("library/includes/samples.inc.php");
+	include("library/includes/dialogBox.inc.php");
+	include("library/includes/ajax.inc.php");
+}else{
+	echo "<BR><BR><br><div class='row'>";
+		echo "<div class='four columns'></div>";
+		echo "<div class='four columns' style='text-align: center;'>Log in to the SMP2 system</div>";
+		echo "<div class='four columns'></div>";
+	echo "</div>";
+	echo "<div class='row'>";
+		echo "<div class='four columns'></div>";
+		echo "<div class='four columns' style='text-align: center;'>";
+			echo "<li class='field'>";
+			echo "<input id='entry-password' name='entry-password' class='input' type='password' placeholder='Password' />";
+			echo "</li>";
+		echo "</div>";
+		echo "<div class='four columns'></div>";
+	echo "</div>";
+	echo "<div class='row'>";
+		echo "<div class='four columns'></div>";
+		echo "<div class='four columns'>";
+		echo "<div style='float:right;' class='medium rounded metro primary btn'><a href='#' id='accept'>Login</a></div>";
+		echo "</div>";
+		echo "<div class='four columns'></div>";
+	echo "</div>";
+	include("library/includes/connection.inc.php");
+	include("library/includes/ftpConnection.inc.php");
+	include("library/includes/show_password.inc.php");
+	include("library/includes/ajax.inc.php");
+}
 /*Message div*/
 echo "<div class='row'>";
 	echo "<div id='samplesMessage'></div>";

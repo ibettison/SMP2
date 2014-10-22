@@ -47,7 +47,8 @@ $createLink = new dbCreateLink($patientTableLink, $sampleTableLink, "smp2_patien
 
 if($writeTables->get_dataWritten()) { //has the samples data table been written to?
     //now lets create the XML File
-    makeXML::makeXMLFile($patientTableLink["id"], $sampleTableLink["id"]);
+	$createFile = new makeXML();
+    $createFile->makeXMLFile($patientTableLink["id"], $sampleTableLink["id"]);
 }
 dl::closedb();
 

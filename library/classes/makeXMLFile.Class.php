@@ -33,21 +33,19 @@ class makeXML {
         $pInfo                      = array_slice($pInfo, 2);
             foreach($pInfo as $pInf=>$values) {
                 if($pInf            == "cancerTreatmentModality"){
-					if(!empty($values) or $values == 0) {
+					if(!empty($values) or is_numeric($values)) {
 						$modalities     = explode(",", $values);
 						$modal          = $dom->createElement('cancerTreatmentModalities');
 						$patient->appendChild($modal);
 						foreach($modalities as $modality){
-
 							$treatment      = $dom->createElement('cancerTreatmentModality');
 							$modal->appendChild($treatment);
 							$treatmentText  = $dom->createTextNode($modality);
 							$treatment->appendChild($treatmentText);
 						}
 					}
-
                 }else{
-					if(!empty($values) or $values == 0){
+					if(!empty($values) or is_numeric($values)){
 						$info           = $dom->createElement($pInf);
 						$patient->appendChild($info);
 						$text           = $dom->createTextNode($values);
@@ -67,14 +65,14 @@ class makeXML {
             $sInfo                  = array_slice($sInfo, 1);
             foreach( $sInfo as $sInf=>$values ) {
              if($sInf               == "morphologySnomed"){
-				if(!empty($values) or $values == 0){
+				if(!empty($values) or is_numeric($values)){
 					$snoMed             = $dom->createElement('morphologySnomed');
 					$elements->appendChild($snoMed);
 					$cdataSection       = $dom->createCDATASection($values);
 					$snoMed->appendChild($cdataSection);
 				}
              }else{
-				if(!empty($values) or $values == 0){
+				if(!empty($values) or is_numeric($values)){
 					$info               = $dom->createElement($sInf);
 					$elements->appendChild($info);
 					$text               = $dom->createTextNode($values);

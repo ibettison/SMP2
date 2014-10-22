@@ -20,9 +20,9 @@ class dbUpdate extends dbWrite {
 					if($checkStatus[0]["status"] 		== "Results Received"){
 						$this->statusChange 			= true;
 						//now need to change the status of the sample to `Ready to Archive`
-						//dl::update("smp2_status", array("status"=>"Ready to Archive"), "samples_id = ".$this->table_link["id"]);
-					}elseif($checkStatus[0]["status"] 	== "Ready to Archive"){
-						throw new Exception("The status of this record `Ready to Archive`, prevents any further editing of this record. No update has occurred.");
+						dl::update("smp2_status", array("status"=>"Ready to Archive"), "samples_id = ".$this->table_link["id"]);
+					}elseif($checkStatus[0]["status"] 	== "Ready to Archive" or $checkStatus[0]["status"] 	== "Archived" ){
+						throw new Exception("The status of this record `".$checkStatus[0]["status"]."`, prevents any further editing of this record. No update has occurred.");
 					}
 				}
 			}

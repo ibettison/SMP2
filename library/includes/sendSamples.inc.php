@@ -11,6 +11,7 @@ $connect = json_decode(file_get_contents(ROOT_FOLDER."/SMP2/library/includes/con
 if(!$conn = dl::connect($connect->dbServer, $connect->dbUserName, $connect->dbPass, $connect->dbName)) {
 die("Cannot connect to the database");
 }
+
 $send = new sendSamples( $_POST );
 $send->sendFileNames();
 $send->moveFiles();

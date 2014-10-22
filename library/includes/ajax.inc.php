@@ -46,6 +46,10 @@ $("#setftp").click(function(){
 	$("#newFtpForm").slideDown(900);
 });
 
+$("#setpw").click(function(){
+	$("#passWordForm").slideDown(900);
+});
+
 $("#viewSelected").click(function(){
 	var samples=[];
 	$("input[type=checkbox]:checked").each ( function() {
@@ -143,8 +147,8 @@ $("#sendFTP").click(function(){
 				success: function(data) {
 					$("#samplesMessage").show();
 					$("#samplesMessage").html(data);
-					$("#samplesMessage").delay(1800).fadeOut(400);
-					$("#samplesMessage").delay(1200).slideUp(900);
+					//$("#samplesMessage").delay(1800).fadeOut(400);
+					//$("#samplesMessage").delay(1200).slideUp(900);
 					$.ajax({
 						type : 'GET',
 						url : 'library/includes/show_samples.inc.php',
@@ -191,6 +195,49 @@ $("#checkResults").click(function(){
 		$("#samplesMessage").html("Results will not be checked");
 		$("#samplesMessage").delay(1800).fadeOut(400);
 	}
-})
+});
 
+$("#accept").click(function(){
+	checkPassword();
+});
+
+function checkPassword(){
+	$.ajax({
+		url: 'library/includes/checkPassword.inc.php',
+		data: {check: $("#entry-password").val()},
+		type: "POST",
+		success: function(data) {
+			$("#samplesMessage").show();
+			$("#samplesMessage").html(data);
+			$("#samplesMessage").delay(1800).fadeOut(400);
+			setTimeout(function() {
+				window.location.replace("index.php");
+			}, 2000);
+
+		}
+	});
+}
+
+$("#entry-password").bind('keypress', function(e){
+	var code = e.keyCode || e.which;
+	if(code == 13) {
+		checkPassword();
+	}
+});
+
+$("#html_logout").click(function(){
+	$.ajax({
+		url: 'library/includes/logout.inc.php',
+		type: "POST",
+		success: function(data) {
+			$("#samplesMessage").show();
+			$("#samplesMessage").html(data);
+			$("#samplesMessage").delay(1800).fadeOut(400);
+			setTimeout(function() {
+				window.location.replace("index.php");
+			}, 1900);
+
+		}
+	});
+});
 </script>

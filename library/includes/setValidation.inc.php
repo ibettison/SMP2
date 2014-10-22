@@ -18,7 +18,7 @@ if($_POST["sampleStatus"]!== "New"){
 }
 if($_POST["sampleStatus"] == "New" or $_POST["sampleStatus"] == "Sent to TH" or $_POST["sampleStatus"] == "Not Sent"){
 	require_once(ROOT_FOLDER."/SMP2/library/includes/validation.inc.php");
-}elseif($_POST["sampleStatus"] == "Results Received" or $_POST["sampleStatus"] == "Ready to Archive"){
+}elseif($_POST["sampleStatus"] == "Results Received" or $_POST["sampleStatus"] == "Ready to Archive"  or $_POST["sampleStatus"] == "Archived"){
 	require_once(ROOT_FOLDER."/SMP2/library/includes/fullvalidation.inc.php");
 	?>
 	<script>
