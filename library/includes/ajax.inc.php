@@ -50,6 +50,17 @@ $("#setpw").click(function(){
 	$("#passWordForm").slideDown(900);
 });
 
+$("#newTables").click(function(){
+	$.ajax({
+		url: 'library/includes/createSMP2Tables.inc.php',
+		type: "POST",
+		success: function(data) {
+			$("#samplesMessage").show();
+			$("#samplesMessage").html(data);
+		}
+	});
+});
+
 $("#viewSelected").click(function(){
 	var samples=[];
 	$("input[type=checkbox]:checked").each ( function() {

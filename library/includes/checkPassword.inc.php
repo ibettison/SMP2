@@ -11,10 +11,19 @@ if(!$conn 						= dl::connect($connect->dbServer, $connect->dbUserName, $connect
 	die("Cannot connect to the database");
 }
 $security_settings 				= dl::select("smp2_security");
-$hashed_password = crypt($_POST["check"], "$2a$11$".bin2hex($security_settings[0]["sec_salt"]));
-if($hashed_password == $security_settings[0]["sec_password"]){
-	$_SESSION["LOGGED_IN"]=true;
-	echo "Successful Login";
-}else{
-	echo "Incorrect Password entered.";
+
+try {
+	if(!empty($security_settings)){
+		$hashed_password = crypt($_POST["check"], "$2a$11$" . bin2hex($security_settings[0]["sec_salt"]));
+		if ($hashed_password == $security_settings[0]["sec_password"]) {
+			$_SESSION["LOGGED_IN"] = true;
+			throw new Exception("Login Successful.");
+		} else {
+			throw new Exception("Incorrect Password entered.");
+		}
+	}else{
+		throw new Exception("Access Denied - please create a security password for the SMP2 system.<BR>Select `Settings` then `Set/Reset Password` to create a password.");
+	}
+} catch (Exception $e) {
+	die($e->getMessage());
 }
