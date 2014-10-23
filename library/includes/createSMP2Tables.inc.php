@@ -10,7 +10,6 @@ try {
 		if (!$conn = dl::connect($connect->dbServer, $connect->dbUserName, $connect->dbPass, $connect->dbName)) {
 			throw new Exception("Cannot connect to the database");
 		}else{
-			echo "Checking";
 			$checkTables = dl::getQuery("select * from information_schema.tables where table_schema = 'smp2'");
 			if(empty($checkTables)){
 				createTables();
@@ -37,7 +36,7 @@ function createTables() {
 	  filename varchar(50) NOT NULL,
 	  PRIMARY KEY (fn_id)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
-	$newTable = dl::getQuery($writeTable);
+	$newTable = dl::_query($writeTable);
 	if($newTable == 1) {
 		echo "<BR>TABLE: `smp2_filename` created.";
 	}else{
@@ -48,7 +47,7 @@ function createTables() {
 	  hubName varchar(30) NOT NULL,
 	  PRIMARY KEY (h_id)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
-	$newTable = dl::getQuery($writeTable);
+	$newTable = dl::_query($writeTable);
 	if($newTable == 1) {
 		echo "<BR>TABLE: `smp2_hub` created.";
 	}else{
@@ -71,7 +70,7 @@ function createTables() {
 	  UNIQUE KEY localPatientIdentifier (localPatientIdentifier),
 	  UNIQUE KEY localPatientIdentifier_2 (localPatientIdentifier)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
-	$newTable = dl::getQuery($writeTable);
+	$newTable = dl::_query($writeTable);
 	if($newTable == 1) {
 		echo "<BR>TABLE: `smp2_patients` created.";
 	}else{
@@ -83,7 +82,7 @@ function createTables() {
 	  samples_id mediumint(9) NOT NULL,
 	  PRIMARY KEY (ps_id)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
-	$newTable = dl::getQuery($writeTable);
+	$newTable = dl::_query($writeTable);
 	if($newTable == 1) {
 		echo "<BR>TABLE: `smp2_patient_samples` created.";
 	}else{
@@ -111,7 +110,7 @@ function createTables() {
 	  dateSampleSent date DEFAULT NULL,
 	  PRIMARY KEY (s_id)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
-	$newTable = dl::getQuery($writeTable);
+	$newTable = dl::_query($writeTable);
 	if($newTable == 1) {
 		echo "<BR>TABLE: `smp2_samples` created.";
 	}else{
@@ -130,7 +129,7 @@ function createTables() {
 	  bankedNucleicAcidIdentifier varchar(10) DEFAULT NULL,
 	  PRIMARY KEY (sr_id)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
-	$newTable = dl::getQuery($writeTable);
+	$newTable = dl::_query($writeTable);
 	if($newTable == 1) {
 		echo "<BR>TABLE: `smp2_results` created.";
 	}else{
@@ -143,7 +142,7 @@ function createTables() {
 	  sec_password varchar(100) NOT NULL,
 	  PRIMARY KEY (sec_id)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
-	$newTable = dl::getQuery($writeTable);
+	$newTable = dl::_query($writeTable);
 	if($newTable == 1) {
 		echo "<BR>TABLE: `smp2_security` created.";
 	}else{
@@ -157,7 +156,7 @@ function createTables() {
 	  datechanged datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	  PRIMARY KEY (ss_id)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
-	$newTable = dl::getQuery($writeTable);
+	$newTable = dl::_query($writeTable);
 	if($newTable == 1) {
 		echo "<BR>TABLE: `smp2_status` created.";
 	}else{
@@ -178,7 +177,7 @@ function createTables() {
 	  comments mediumtext,
 	  PRIMARY KEY (tr_id)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
-	$newTable = dl::getQuery($writeTable);
+	$newTable = dl::_query($writeTable);
 	if($newTable == 1) {
 		echo "<BR>TABLE: `smp2_test_results` created.";
 	}else{
