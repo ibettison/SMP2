@@ -30,11 +30,12 @@ echo "<a class='toggle' gumby-trigger='#nav1 > ul' href='#'><i class='icon-menu'
         <ul>
           <li><a href='#' id='setconn'>Set connection information</a></li>
           <li><a href='#' id='setftp'>Ftp Settings</a></li>
+          <li><a href='#' id='newTables'>Create Database Tables</a></li>
           <li><a href='#' id='setpw'>Set/Reset Password</a></li>
         </ul>
       </div>
     </li>
-     <li><a href='#' id='html_logout'  ><img src='img/exit.png' title='Logout' alt='Logout' /></a>
+     <li><a href='#' id='html_logout'><img src='img/exit.png' title='Logout' alt='Logout' /></a>
     </li>
   </ul>
 </div>";
