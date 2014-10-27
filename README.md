@@ -8,5 +8,6 @@ The system manages the transfer of the data and captures the results that are up
 
 Gumby 2 is used as the PHP framework.
 
-The PHPSECLIB application is incorporated into this project to manage the secure connection to the sFTP server and the transfer of the files. The library can be cloned her https://github.com/phpseclib/phpseclib.git
+The PHPSECLIB application is incorporated into this project to manage the secure connection to the sFTP server and the transfer of the files. The library has been forked into my repository and should be cloned into the correct location inside the SMP2 repo.
+
 
