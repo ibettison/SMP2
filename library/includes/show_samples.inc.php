@@ -58,11 +58,13 @@ echo "<div class='row'>";
                     $status = "<span style='color:$colour;'>".$icon."</span> ".$statusValue[0]["status"];
                     $statusChanged = "[".$statusValue[0]["datechanged"]."]";
                 }
-                echo "<tr>";
-                    echo "<td><li class='field'>
+                echo "<tr class='checkboxTable'>";
+                    echo "<td class='checkboxTable'><li class='field'>
+                    	<label class='checkbox' for='check1'>
                             <input name='sampleCheck[]' id='check1' type='checkbox' value='".$sample['sourceSampleIdentifier']."'>
-                            <span</span></li></td>
-                    <td>".$sample["dateSampleSent"]."</td><td>".$sample["sourceSampleIdentifier"]."</td><td>".$sample["localPatientIdentifier"]."</td><td>$status<p  style='font-size:10px;'>$statusChanged</p></td>";
+                            <span></span></li></td>
+                        </label>
+                    <td class='checkboxTable'>".$sample["dateSampleSent"]."</td><td class='checkboxTable'>".$sample["sourceSampleIdentifier"]."</td><td class='checkboxTable'>".$sample["localPatientIdentifier"]."</td><td class='checkboxTable'>$status<p  style='font-size:10px;'>$statusChanged</p></td>";
                     echo "</tr>";
             }
         }else{

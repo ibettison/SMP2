@@ -15,7 +15,6 @@ try {
 				createTables();
 
 			}else{
-				var_dump($checkTables);
 				throw new Exception("Cannot create the NEW tables as they already exist.");
 			}
 

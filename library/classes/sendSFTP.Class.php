@@ -29,8 +29,8 @@ class sftpConnect{
     static public function checkConnection() {
 
         error_reporting(E_ALL & ~E_WARNING);
-        self::$sFTPConnection = self::getSFTPConnection();
-        $conn = new Net_SFTP(self::$sFTPConnection->ftpServer);
+        self::$sFTPConnection 			= self::getSFTPConnection();
+        $conn 							= new Net_SFTP(self::$sFTPConnection->ftpServer);
         if(!$conn->login(self::$sFTPConnection->ftpUserName, self::$sFTPConnection->ftpPassword)){
             return false;
         }else{

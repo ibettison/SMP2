@@ -25,24 +25,24 @@ echo "<p>Once a connection to the database is achieved you will not need to chan
 echo "</div>";
 echo "<div class='row'>";
 echo "<div class='six columns'>";
-echo "<div class='field no-icon'>
+echo "<div class='field'>
                 <input class='input' type='text' placeholder='Enter database name' id='dbName' name='dbName' value='$connDB'/>
                   </div>";
 echo "</div>";
 echo "<div class='six columns'>";
-echo "<div class='field no-icon'>
+echo "<div class='field'>
                     <input class='input' type='text' placeholder='Enter the User Name' id='dbUserName' name='dbUserName' value='$connUser'/>
                   </div>";
 echo "</div>";
 echo "</div>";
 echo "<div class='row'>";
 echo "<div class='six columns'>";
-echo "<div class='field no-icon'>
+echo "<div class='field'>
                         <input class='input' type='password' placeholder='Enter password' id='dbPass' name='dbPass' value='$connPass'/>
                           </div>";
 echo "</div>";
 echo "<div class='six columns'>";
-echo "<div class='field no-icon'>
+echo "<div class='field'>
                             <input class='input' type='text' placeholder='Enter the Server Name (should be IP Address or localhost)' id='dbServer' name='dbServer' value='$connServer'/>
                           </div>";
 echo "</div>";

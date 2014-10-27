@@ -29,36 +29,36 @@ echo "<p>Once a connection to the FTP Server is achieved you will not need to ch
 echo "</div>";
 echo "<div class='row'>";
 echo "<div class='six columns'>";
-echo "<div class='field no-icon'>
+echo "<div class='field'>
                 <input class='input' type='text' placeholder='Enter FTP Server Name or IP Address' id='ftpServer' name='ftpServer' value='$ftpServer'/>
                   </div>";
 echo "</div>";
 echo "<div class='six columns'>";
-echo "<div class='field no-icon'>
+echo "<div class='field'>
                     <input class='input' type='text' placeholder='Enter the FTP User Name' id='ftpUserName' name='ftpUserName' value='$ftpUserName'/>
                   </div>";
 echo "</div>";
 echo "</div>";
 echo "<div class='row'>";
 echo "<div class='six columns'>";
-echo "<div class='field no-icon'>
+echo "<div class='field'>
                         <input class='input' type='password' placeholder='Enter FTP password' id='ftpPassword' name='ftpPassword' value='$ftpPassword'/>
                           </div>";
 echo "</div>";
 echo "<div class='six columns'>";
-echo "<div class='field no-icon'>
+echo "<div class='field'>
                             <input class='input' type='text' placeholder='Enter the folder in which to send samples' id='ftpSendFolder' name='ftpSendFolder' value='$ftpSendFolder'/>
                           </div>";
 echo "</div>";
 echo "</div>";
 echo "<div class='row'>";
 echo "<div class='six columns'>";
-echo "<div class='field no-icon'>
+echo "<div class='field'>
                             <input class='input' type='text' placeholder='Enter the folder in which to receive samples' id='ftpResultFolder' name='ftpResultFolder' value='$ftpResultFolder'/>
                           </div>";
 echo "</div>";
 echo "<div class='six columns'>";
-echo "<div class='field no-icon'>
+echo "<div class='field'>
                             <input class='input' type='text' placeholder='Enter the folder in which to Archive samples ' id='ftpArchiveFolder' name='ftpArchiveFolder' value='$ftpArchiveFolder'/>
                           </div>";
 echo "</div>";
