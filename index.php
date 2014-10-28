@@ -2,6 +2,7 @@
 session_start();
 $_SESSION["sessionId"]=session_id();
 include("header.inc");
+require("vendor/autoload.php");
 error_reporting(E_ALL);
 
 echo "<div class='row'>";
