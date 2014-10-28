@@ -4,8 +4,43 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "86e2ada304126d30536f3cbf319eba4c",
+    "hash": "0193f6bc3897e1e5358d6e55210b8479",
     "packages": [
+        {
+            "name": "phpexcel/phpexcel",
+            "version": "v1.7.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ddeboer/phpexcel.git",
+                "reference": "de9c8871a87ce9be354d35f5e966dd65a0c7c6d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ddeboer/phpexcel/zipball/de9c8871a87ce9be354d35f5e966dd65a0c7c6d2",
+                "reference": "de9c8871a87ce9be354d35f5e966dd65a0c7c6d2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPExcel": "Classes"
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "GNU"
+            ],
+            "description": "PHPExcel - OpenXML - Create Excel2007 documents in PHP - Spreadsheet engine",
+            "homepage": "http://phpexcel.codeplex.com",
+            "keywords": [
+                "excel",
+                "xls"
+            ],
+            "time": "2012-09-04 18:29:37"
+        },
         {
             "name": "phpseclib/phpseclib",
             "version": "0.3.8",

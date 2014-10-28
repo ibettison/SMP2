@@ -17,6 +17,7 @@
     	"forum": "https://plus.google.com/u/0/communities/108760896951473344451"
     },
     "require": {
-        "phpseclib/phpseclib": "0.3.8"
+        "phpseclib/phpseclib": "0.3.8",
+        "phpexcel/phpexcel": "v1.7.7"
     }
 }
