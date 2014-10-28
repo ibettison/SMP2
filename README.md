@@ -10,4 +10,4 @@ Gumby 2 is used as the PHP framework.
 
 The PHPSECLIB application is incorporated into this project to manage the secure connection to the sFTP server and the transfer of the files. The library has been forked into my repository and should be cloned into the correct location inside the SMP2 repo.
 
-
+PHP version 5.4.12 was used to develop the SMP2 application.
