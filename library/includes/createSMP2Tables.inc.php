@@ -152,7 +152,7 @@ function createTables() {
 		ss_id mediumint(9) NOT NULL AUTO_INCREMENT,
 	  samples_id mediumint(9) NOT NULL,
 	  status varchar(20) NOT NULL,
-	  datechanged datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	  datechanged timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	  PRIMARY KEY (ss_id)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
 	$newTable = dl::_query($writeTable);
