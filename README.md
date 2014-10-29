@@ -6,8 +6,8 @@ The system was written by Newcastle University to manage the transimission of XM
 
 The system manages the transfer of the data and captures the results that are uploaded to the sFTP repository, saving the details into a database and providing the means to capture the full Patient and Sample detail subsequently archiving the details at the Technical Hub upon data validation and the completion of the above data.
 
-Gumby 2 is used as the PHP framework.
+##Gumby 2 is used as the PHP framework.
 
-The PHPSECLIB application is incorporated into this project to manage the secure connection to the sFTP server and the transfer of the files. The library has been forked into my repository and should be cloned into the correct location inside the SMP2 repo.
+The PHPSECLIB application is incorporated into this project to manage the secure connection to the sFTP server and the transfer of the files. The library is added by running `php composer.phar install` at the root of the install, this may require using SSH to connect to the root of the web app on the web server to run the command.
 
 PHP version 5.4.12 was used to develop the SMP2 application.
