@@ -7,7 +7,7 @@ if(!defined("ROOT_FOLDER")){
     $root = $_SERVER["DOCUMENT_ROOT"];
     define('ROOT_FOLDER', $root);
 }
-include_once(ROOT_FOLDER."/SMP2/library/includes/mysqli_datalayer.php");
+include_once(ROOT_FOLDER."SMP2/library/includes/mysqli_datalayer.php");
 $connect 		= json_decode(file_get_contents(ROOT_FOLDER."/SMP2/library/includes/connection.json"));
 if(!$conn 		= dl::connect($connect->dbServer, $connect->dbUserName, $connect->dbPass, $connect->dbName)) {
 	die("Cannot connect to the database");
@@ -21,7 +21,7 @@ $fileName 		= dl::select("smp2_filename", "samples_id =".$checkSample[0]["s_id"]
 if(!empty($beenSent)){
 	if($beenSent[0]["status"] == "Sent to TH"){
 		//now lets check whether the file has been moved on the remote server.
-		include_once(ROOT_FOLDER."/SMP2/library/includes/sendSFTP.inc.php");
+		include_once(ROOT_FOLDER."SMP2/library/includes/sendSFTP.inc.php");
 		if($connected = sftpConnect::checkConnection()){
 			$sFTPConnection = sftpConnect::getSFTPConnection();
 			$connected->chdir($sFTPConnection->ftpSendFolder);

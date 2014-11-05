@@ -12,7 +12,7 @@ class sftpConnect{
     static public function createSFTPConnection($server, $user, $pass, $send, $result, $archive){
 		$jsonArray = array("ftpServer"=>$server, "ftpUserName"=>$user, "ftpPassword"=>$pass, "ftpSendFolder"=>$send, "ftpResultFolder"=>$result, "ftpArchiveFolder"=>$archive);
 		try{
-			if(!file_put_contents(ROOT_FOLDER."/SMP2/library/includes/ftpConnect.json", json_encode($jsonArray))){
+			if(!file_put_contents(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json", json_encode($jsonArray))){
 				throw new Exception("The .json file was not created, there may be a permissions issue.");
 			}else{
 				echo "The .json file was created.";
@@ -23,7 +23,7 @@ class sftpConnect{
     }
 
     static public function getSFTPConnection(){
-        return json_decode(file_get_contents(ROOT_FOLDER."/SMP2/library/includes/ftpConnect.json"));
+        return json_decode(file_get_contents(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json"));
     }
 
     static public function checkConnection() {
@@ -40,8 +40,8 @@ class sftpConnect{
     }
 
 	static public function connectionVariables(){
-		if(file_exists(ROOT_FOLDER."/SMP2/library/includes/ftpConnect.json")) {
-			self::$connectFtp 			= json_decode(file_get_contents(ROOT_FOLDER."/SMP2/library/includes/ftpConnect.json"));
+		if(file_exists(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json")) {
+			self::$connectFtp 			= json_decode(file_get_contents(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json"));
 			self::$ftpServer 			= self::$connectFtp->ftpServer;
 			self::$ftpUserName 			= self::$connectFtp->ftpUserName;
 			self::$ftpPassword 			= self::$connectFtp->ftpPassword;

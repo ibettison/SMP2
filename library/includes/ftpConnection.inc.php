@@ -3,8 +3,8 @@ if(!defined("ROOT_FOLDER")){
 $root = $_SERVER["DOCUMENT_ROOT"];
 define('ROOT_FOLDER', $root);
 }
-if(file_exists(ROOT_FOLDER."/SMP2/library/includes/ftpConnect.json")) {
-    $connectFtp = json_decode(file_get_contents(ROOT_FOLDER."/SMP2/library/includes/ftpConnect.json"));
+if(file_exists(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json")) {
+    $connectFtp = json_decode(file_get_contents(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json"));
     $ftpServer = $connectFtp->ftpServer;
     $ftpUserName = $connectFtp->ftpUserName;
     $ftpPassword = $connectFtp->ftpPassword;
@@ -130,11 +130,10 @@ echo "</div>";
 // if omitted, form will submit normally
         submit: function(data) {
             $.ajax({
-                url: 'library/classes/dbFtpCheck.Class.php',
+                url: 'library/classes/dbFtpCheck.class.php',
                 data: data,
                 type: "POST",
                 success: function(data) {
-
                     $("#ftpMessage").show();
                     $("#ftpMessage").html(data);
                     $("#ftpMessage").delay(1200).fadeOut(400);

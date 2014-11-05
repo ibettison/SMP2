@@ -6,9 +6,9 @@ if(!defined("ROOT_FOLDER")){
 }
 
 try {
-	if (file_exists(ROOT_FOLDER . "/SMP2/library/includes/connection.json")) {
-		include_once(ROOT_FOLDER . "/SMP2/library/includes/mysqli_datalayer.php");
-		$connect = json_decode(file_get_contents(ROOT_FOLDER . "/SMP2/library/includes/connection.json"));
+	if (file_exists(ROOT_FOLDER . "SMP2/library/includes/connection.json")) {
+		include_once(ROOT_FOLDER . "SMP2/library/includes/mysqli_datalayer.php");
+		$connect = json_decode(file_get_contents(ROOT_FOLDER . "SMP2/library/includes/connection.json"));
 		if (!$conn = dl::connect($connect->dbServer, $connect->dbUserName, $connect->dbPass, $connect->dbName)) {
 			throw new Exception("Cannot connect to the database");
 		}else{

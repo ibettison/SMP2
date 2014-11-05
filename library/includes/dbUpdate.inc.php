@@ -6,16 +6,16 @@ if(!defined("ROOT_FOLDER")){
     $root = $_SERVER["DOCUMENT_ROOT"];
     define('ROOT_FOLDER', $root);
 }
-include_once(ROOT_FOLDER."/SMP2/library/includes/mysqli_datalayer.php");
+include_once(ROOT_FOLDER."SMP2/library/includes/mysqli_datalayer.php");
 $connect = json_decode(file_get_contents(ROOT_FOLDER."/SMP2/library/includes/connection.json"));
 if(!$conn = dl::connect($connect->dbServer, $connect->dbUserName, $connect->dbPass, $connect->dbName)) {
     die("Cannot connect to the database");
 }
 
-include                 (ROOT_FOLDER."/SMP2/library/classes/makeXMLFile.Class.php");
-include                 (ROOT_FOLDER."/SMP2/library/classes/makeArchivedXMLFile.Class.php");
-include                 (ROOT_FOLDER."/SMP2/library/classes/dbWrite.Class.php");
-include                 (ROOT_FOLDER."/SMP2/library/classes/dbUpdate.Class.php");
+include                 (ROOT_FOLDER."SMP2/library/classes/makeXMLFile.Class.php");
+include                 (ROOT_FOLDER."SMP2/library/classes/makeArchivedXMLFile.Class.php");
+include                 (ROOT_FOLDER."SMP2/library/classes/dbWrite.Class.php");
+include                 (ROOT_FOLDER."SMP2/library/classes/dbUpdate.Class.php");
 
 //lets check to see if the user has tried to change any of the key fields.
 // the user must delete and recreate the sample if this is the case

@@ -3,10 +3,10 @@ class dbConnectionCheck {
 
     function create_connection( $postedValues ) {
 		try{
-			if(!file_put_contents(ROOT_FOLDER."/SMP2/library/includes/connection.json", json_encode($postedValues))){
+			if(!file_put_contents(ROOT_FOLDER."SMP2/library/includes/connection.json", json_encode($postedValues))){
 				throw new Exception("ERROR: there was a problem creating the connection file.");
 			}else{
-				if(file_exists(ROOT_FOLDER."/SMP2/library/includes/connection.json")) {
+				if(file_exists(ROOT_FOLDER."SMP2/library/includes/connection.json")) {
 					echo "Connection file was created.";
 				}
 			}
