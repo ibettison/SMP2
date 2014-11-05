@@ -12,9 +12,9 @@ class sftpConnect{
     static public function createSFTPConnection($server, $user, $pass, $send, $result, $archive){
 		$jsonArray = array("ftpServer"=>$server, "ftpUserName"=>$user, "ftpPassword"=>$pass, "ftpSendFolder"=>$send, "ftpResultFolder"=>$result, "ftpArchiveFolder"=>$archive);
 		echo ROOT_FOLDER;
-		var_dump($jsonArray);
-		die();
+
 		try{
+			echo "<BR>Trying...";
 			if(!file_put_contents(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json", json_encode($jsonArray))){
 				throw new Exception("The .json file was not created, there may be a permissions issue.");
 			}else{
