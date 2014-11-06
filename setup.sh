@@ -1,6 +1,7 @@
 #!/bin/sh
 # setup script for the SMP2 project
 # create and setup the permissions on the xml file locations
+chmod 766 xml-documents
 cd xml-documents
 mkdir files-sent
 chmod 766 files-sent
