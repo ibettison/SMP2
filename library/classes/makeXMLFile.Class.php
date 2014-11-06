@@ -92,7 +92,7 @@ class makeXML {
 
         //set to true if you are testing the transfer.
         // this will place a prefix of "test_" at the front of the filename.
-        $testing                    = true;
+        $testing                    = false;
         if($testing) {
             $prefix = "test_";
         }else{
