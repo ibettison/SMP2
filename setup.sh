@@ -13,5 +13,8 @@ cd ..
 # now install the third party libraries required by the SMP2 project 
 # using Composer
 php composer.phar install
+cd library
+chmod 777 includes
+echo "The permissions have been changed to allow you to save additional settings files within the SMP2 application.\r\nOnce all connections have been tested the security.sh script needs to be ran.\r\nThis will secure the install of SMP2 and will prevent hackers from accessing your Web service."
  
 
