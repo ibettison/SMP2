@@ -107,9 +107,9 @@ class makeXML {
 
         $fileName                   = $prefix.$today." ".$org."-".$patId."-".$sampId.".xml";
 		$fileLocation = $this->setFilelocation($fileName);
-		chmod($fileLocation, 0777);
+		chmod($fileLocation, octdec(0777));
 		$dom->save($fileLocation.$fileName);
-		chmod($fileLocation, 0744);
+		chmod($fileLocation, octdec(0744));
         //now lets save the filename to the database to retrieve later
         //check to see if the filename has been recorded. The file will over write the existing so should work if there are changes added on the same date
         $findFile = dl::select("smp2_filename", "samples_id=".$samplesId);
