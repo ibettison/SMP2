@@ -87,8 +87,6 @@ class makeXML {
 		$smTechHub->setAttribute('name', '2 - Cardiff');
 		$this->addResultsIfRequired($sampleIdentifier, $dom, $smTechHub, $root);
         $dom->formatOutput          = true;
-        //show the xml document
-            //echo "<xmp>". $dom->saveXML(). "</xmp>";
 
         //set to true if you are testing the transfer.
         // this will place a prefix of "test_" at the front of the filename.
@@ -127,6 +125,10 @@ class makeXML {
 	}
 
 	public function setFileLocation(){
-		return("../../xml-documents/");
+		if(!defined("ROOT_FOLDER")){
+			$root = $_SERVER["DOCUMENT_ROOT"];
+			define('ROOT_FOLDER', $root);
+		}
+		return(ROOT_FOLDER."SMP2/xml-documents/");
 	}
 }

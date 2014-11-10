@@ -84,6 +84,10 @@ class makeArchiveXML extends makeXML {
 	}
 
 	public function setFileLocation(){
-		return("../../xml-documents/files-archived/");
+		if(!defined("ROOT_FOLDER")){
+			$root = $_SERVER["DOCUMENT_ROOT"];
+			define('ROOT_FOLDER', $root);
+		}
+		return(ROOT_FOLDER."SMP2/xml-documents/files-archived/");
 	}
 }
