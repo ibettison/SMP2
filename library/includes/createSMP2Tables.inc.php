@@ -139,7 +139,6 @@ function createTables() {
 
 	$writeTable = "CREATE TABLE IF NOT EXISTS smp2_security (
 		sec_id mediumint(9) NOT NULL AUTO_INCREMENT,
-	  sec_salt varchar(22) NOT NULL,
 	  sec_password varchar(100) NOT NULL,
 	  PRIMARY KEY (sec_id)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
