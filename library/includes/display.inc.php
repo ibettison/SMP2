@@ -508,7 +508,6 @@ echo "</div>";
 	});
 	$("#submit_button").click(function(){
 		$("#smp2_form").submit();
-		Gumby.init();
 	});
 
 	/*
