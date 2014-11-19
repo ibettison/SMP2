@@ -5,14 +5,12 @@ define('ROOT_FOLDER', $root);
 }
 if(file_exists(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json")) {
     $connectFtp = json_decode(file_get_contents(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json"));
-    $ftpServer = $connectFtp->ftpServer;
     $ftpUserName = $connectFtp->ftpUserName;
     $ftpPassword = $connectFtp->ftpPassword;
     $ftpSendFolder = $connectFtp->ftpSendFolder;
     $ftpResultFolder = $connectFtp->ftpResultFolder;
 	$ftpArchiveFolder = $connectFtp->ftpArchiveFolder;
 }else{
-    $ftpServer = "";
     $ftpUserName = "";
     $ftpPassword = "";
     $ftpSendFolder = "";
@@ -28,11 +26,6 @@ echo "<h3>FTP Connection Information</h3>";
 echo "<p>Once a connection to the FTP Server is achieved you will not need to change this again.</p>";
 echo "</div>";
 echo "<div class='row'>";
-echo "<div class='six columns'>";
-echo "<div class='field'>
-                <input class='input' type='text' placeholder='Enter FTP Server Name or IP Address' id='ftpServer' name='ftpServer' value='$ftpServer'/>
-                  </div>";
-echo "</div>";
 echo "<div class='six columns'>";
 echo "<div class='field'>
                     <input class='input' type='text' placeholder='Enter the FTP User Name' id='ftpUserName' name='ftpUserName' value='$ftpUserName'/>
@@ -82,14 +75,6 @@ echo "</div>";
     $('#smp2_ftp').validation({
         // pass an array of required field objects
         required: [
-            {
-                // name should reference a form inputs name attribute
-                // just passing the name property will default to a check for a present value
-                name: 'ftpServer',
-                validate: function($e) {
-                    return $e.val().length >0;
-                }
-            },
             {
                 name: 'ftpUserName',
                 validate: function($e) {

@@ -13,10 +13,7 @@ try {
 			throw new Exception("Cannot connect to the database");
 		}else{
 			$security_settings 				= dl::select("smp2_security");
-			if(!empty($security_settings)){
-				$pwSalt 					= $security_settings[0]["sec_salt"];
-			}else{
-				$pwSalt 					= "";
+			if(empty($security_settings)){
 				$pwPassword 				= "";
 				$pwPass 					= "";
 			}
@@ -36,35 +33,16 @@ echo "<div class='row'>";
 echo "<h3>Set/Reset Password</h3>";
 echo "<p>You can create a new password or reset an existing password here.</p>";
 echo "</div>";
-if(empty($pwSalt)){ //only want to set the salt once and once it has been validated and saved then never change it
-	echo "<div class='row'>";
-		echo "<div class='six columns'>";
-		echo "<div class='field no-icon'>
-						<input style='width: 95%;' class='input' type='text' placeholder='Enter a 22 character salt to intialise the security procedure' id='pwSalt' name='pwSalt'/> <span id='lenCount' class='adjoined'>0</span>
-						  </div>";
-		echo "</div>";
 
-	echo "</div>";
-}else{
-	//if the salt exists it is displayed as hidden so it cannot be changed but still validated
-	echo "<div class='row'>";
-	echo "<div class='six columns'>";
-	echo "<div class='field no-icon'>
-						<input style='width: 95%;' class='input' type='text' placeholder='Enter a 22 character salt to intialise the security procedure' id='pwSalt' name='pwSalt' value='$pwSalt'
-						hidden/>
-						  </div>";
-	echo "</div>";
+echo "<div class='row'>";
+echo "<div class='six columns'>";
+echo "<div class='field no-icon'>
+					<input class='input' type='password' placeholder='Enter your Old password' id='pwOldPassword' name='pwOldPassword' />
+				  </div>";
+echo "</div>";
+echo "</div>";
 
-	echo "</div>";
-	echo "<div class='row'>";
-	echo "<div class='six columns'>";
-	echo "<div class='field no-icon'>
-						<input class='input' type='password' placeholder='Enter your Old password' id='pwOldPassword' name='pwOldPassword' />
-					  </div>";
-	echo "</div>";
-	echo "</div>";
 
-}
 echo "<div class='row'>";
 	echo "<div class='six columns'>";
 	echo "<div class='field no-icon'>
@@ -98,25 +76,12 @@ echo "</div>";
 		$("#passWordForm").delay(200).slideUp(900);
 	});
 
-	$("#pwSalt").bind('keypress', function(){
-		var lenSalt = ($("#pwSalt").val().length) + 1;
-		$("#lenCount").html(lenSalt);
-	});
-
 	$("#submit_pw").click(function(){
 		$("#smp2_password").submit();
 	});
 	$('#smp2_password').validation({
 		// pass an array of required field objects
 		required: [
-			{
-				// name should reference a form inputs name attribute
-				// just passing the name property will default to a check for a present value
-				name: 'pwSalt',
-				validate: function($e) {
-					return $e.val().length == 0 || $e.val().length  == 22;
-				}
-			},
 			{
 				name: 'pwPassword',
 				validate: function($e) {

@@ -24,6 +24,7 @@ class dl {
 			}
 		}catch(Exception $exception){
 			echo($exception->getMessage());
+			return false;
 		}
    }
  

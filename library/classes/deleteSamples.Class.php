@@ -14,7 +14,6 @@ class deleteSamples extends sendSamples{
     }
 
     function processFiles( $processFiles ) {
-        $local = NET_SFTP_LOCAL_FILE;
         foreach($processFiles as $files) {
             try {
 				//check the status of this sample to see if it can be deleted
@@ -25,43 +24,19 @@ class deleteSamples extends sendSamples{
 						throw new Exception("The status of this record prevents its deletion. Record deletion is not possible!");
 					}
 				}
-                //lets check to see if the file has not been sent yet.
-                if(file_exists(ROOT_FOLDER."SMP2/xml-documents/".$files["fileName"])){
-                    if(unlink(ROOT_FOLDER."SMP2/xml-documents/".$files["fileName"])) { //delete the unsent file
-                        $this->updateStatus($files["sampleID"]);
-                        echo "<BR>Deleted File `".$files["fileName"]."` from local server.";
-                    }
-                }else{
-					if(!file_exists(ROOT_FOLDER."SMP2/xml-documents/files-sent/".$files["fileName"])) {
-						throw new Exception("<BR>The file `".$files["fileName"]."` was not found in folder /SMP2/xml-documents/files-sent - the file may already have been deleted.");
-					}else{
-						if(!$this->connected->get($files["fileName"])){
-							//the file on the remote server is not in the folder so assume it has been moved to Received folder so inform the user and make no change to database
-							throw new Exception("<BR>The file `".$files["fileName"]."` was not found in the remote sent folder, <BR>assume it has been moved to the received folder. No deletion occurred!");
-						}else{
-							$this->connected->delete($files["fileName"],ROOT_FOLDER."/SMP2/xml-documents/files-sent".$files["fileName"], $local);
-							if(unlink(ROOT_FOLDER."SMP2/xml-documents/files-sent/".$files["fileName"])) { //delete the sent file
-								$this->updateStatus($files["sampleID"]);
-								echo "<BR>Deleted File `".$files["fileName"]."` from local and remote servers.";
-							}
-						}
-					}
+				if(!$this->connected->get($files["fileName"])){
+					//the file on the remote server is not in the folder so assume it has been moved to Received folder so inform the user and make no change to database
+					throw new Exception("<BR>The file `".$files["fileName"]."` was not found in the remote sent folder, <BR>assume it has been moved to the received folder. No deletion occurred!");
+				}else{
+					$this->connected->delete($files["fileName"]);
+					$this->updateStatus($files["sampleID"]);
+					echo "<BR>Deleted File `".$files["fileName"]."` from local and remote servers.";
 				}
 
             }catch( Exception $exception){
                 die($exception->getMessage());
             }
         }
-    }
-
-    function move_file($fileName, $sampleId){
-        if(!file_exists(ROOT_FOLDER."SMP2/xml-documents/files-sent/".$fileName)){
-            throw new Exception( "File '$fileName' not found.");
-        }
-        if(!unlink( ROOT_FOLDER."SMP2/xml-documents/files-sent/".$fileName )){
-            throw new Exception("The file '$fileName' was not deleted, there may be a permissions issue.");
-        }
-        $this->updateStatus($sampleId);
     }
 
     function updateStatus($sampleId) {

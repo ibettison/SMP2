@@ -106,17 +106,11 @@ class makeXML {
         $sampId                     = $sampleInfo[0]["sourceSampleIdentifier"];
 
         $fileName                   = $prefix.$today." ".$org."-".$patId."-".$sampId.".xml";
-		$fileLocation = $this->setFilelocation($fileName);
-		$dom->save($fileLocation.$fileName);
-        //now lets save the filename to the database to retrieve later
+        //now lets save the filename and xml code to the database to retrieve later
         //check to see if the filename has been recorded. The file will over write the existing so should work if there are changes added on the same date
         $findFile = dl::select("smp2_filename", "samples_id=".$samplesId);
-        if(empty($findFile)) {
-            dl::insert("smp2_filename", array("samples_id"=>$samplesId, "filename"=>$fileName));
-        }else{
-			dl::update("smp2_filename", array("filename"=>$fileName), "samples_id =".$samplesId);
-		}
-    }
+		$this->createFileRecord($findFile, $samplesId, $fileName, $dom);
+	}
 
 	public function addTechHubElements($sampleId, $dom, $sample){
 		$techHubElements            = $dom->createElement('technologyHubElements');
@@ -126,12 +120,20 @@ class makeXML {
 		return false;
 	}
 
-	public function setFileLocation(){
-
-		if(!defined("ROOT_FOLDER")){
-			$root = $_SERVER["DOCUMENT_ROOT"];
-			define('ROOT_FOLDER', $root);
+	/**
+	 * @param $findFile this is the recordset to check if this is an addition or an update to the database
+	 * @param $samplesId link to the samples table
+	 * @param $fileName the format for storing and sending the xml file
+	 * @param $dom needed to save the xml data to the table field
+	 */
+	public function createFileRecord($findFile, $samplesId, $fileName, $dom)
+	{
+		if (empty($findFile)) {
+			dl::insert("smp2_filename", array("samples_id" => $samplesId, "filename" => $fileName, "xml_sampleInfo" => $dom->saveXML()));
+		} else {
+			dl::update("smp2_filename", array("filename" => $fileName, "xml_sampleInfo" => $dom->saveXML()), "samples_id =" . $samplesId);
 		}
-		return(ROOT_FOLDER."SMP2/xml-documents/");
 	}
+
+
 }

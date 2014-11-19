@@ -22,7 +22,8 @@ class sendSamples {
                 if(empty($sampleRec)) {
                     throw new Exception("<BR>ERROR - The filename was not found");
                 }else{
-                    $fileNames[] = array("fileName"=>$sampleRec[0]["filename"], "sampleID"=>$sampleRec[0]["s_id"]);
+                    $fileNames[] = array("fileName"=>$sampleRec[0]["filename"], "sampleID"=>$sampleRec[0]["s_id"], "sampleInfo"=>$sampleRec[0]["xml_sampleInfo"],
+					"fullSampleInfo"=>$sampleRec[0]["xml_fullSampleInfo"]);
                 }
             }catch( Exception $exception){
                 die($exception->getMessage());
@@ -36,33 +37,28 @@ class sendSamples {
         if($this->connected = sftpConnect::checkConnection()){
             $this->sFTPConnection = sftpConnect::getSFTPConnection();
             $this->processFiles($this->fileNames);
-            $this->displayFiles();
+			$this->displayFiles();
         }else{
             die("sFTP connection Error!!! Not connected");
         }
     }
 
     function processFiles( $processFiles ) {
-        $local = NET_SFTP_LOCAL_FILE;
         foreach($processFiles as $files) {
             try {
 
 				$checkStatus = dl::select("smp2_status", "samples_id = ".$files["sampleID"]);
 				if(empty($checkStatus) or $checkStatus[0]["status"] == "Sent to TH"){
-					$folder = "/SMP2/xml-documents/";
+					$string2Send = $files["sampleInfo"];
 					$this->connected->chdir($this->sFTPConnection->ftpSendFolder);
 				}elseif($checkStatus[0]["status"] == "Ready to Archive"){
-					$folder = "/SMP2/xml-documents/files-archived/";
+					$string2Send = $files["fullSampleInfo"];
 					$this->connected->chdir($this->sFTPConnection->ftpArchiveFolder);
 				}else{
 					throw new Exception("<BR>The status of the file you are trying to send does not match the status allowed for transmission.");
 				}
-
-                if(!file_exists(ROOT_FOLDER.$folder.$files["fileName"])) {
-                    throw new Exception("<BR>The file `".$files["fileName"]."` was not found in folder /SMP2/xml-documents/ - the file may already have been sent to the TH.");
-                }else{
-					$this->connected->put($files["fileName"],ROOT_FOLDER.$folder.$files["fileName"], $local);
-				}
+				$this->connected->put($files["fileName"],$string2Send);
+				$this->updateStatus($files["sampleID"]);
             }catch( Exception $exception){
                 die($exception->getMessage());
             }
@@ -77,40 +73,6 @@ class sendSamples {
         foreach($files as $file) {
             echo $file."<BR>";
         }
-    }
-
-    function moveFiles() {
-        //need to move the files to the files-sent folder
-        foreach ($this->fileNames as $fn) {
-            try{
-				$checkStatus = dl::select("smp2_status", "samples_id = ". $fn["sampleID"]);
-				if(empty($checkStatus)){
-					$this->move_file($fn["fileName"], $fn["sampleID"]);
-				}else{
-					if($checkStatus[0]["status"] !== "Ready to Archive"){
-						$this->move_file($fn["fileName"], $fn["sampleID"]);
-					}else{
-						$this->updateStatus($fn["sampleID"]);
-					}
-				}
-            }catch( Exception $exception){
-                die($exception->getMessage());
-            }
-
-        }
-    }
-
-    function move_file($fileName, $sampleId){
-        if(!file_exists(ROOT_FOLDER."/SMP2/xml-documents/".$fileName)){
-            throw new Exception( "File '$fileName' does not exist");
-        }
-        if(!rename(ROOT_FOLDER."/SMP2/xml-documents/".$fileName, ROOT_FOLDER."/SMP2/xml-documents/files-sent/".$fileName )){
-            throw new Exception("The file '$fileName' was not moved, there may be a permissions issue.");
-        }
-        if(!file_exists(ROOT_FOLDER."/SMP2/xml-documents/files-sent/".$fileName)){
-            throw new Exception( "The file '$fileName' was not moved" );
-        }
-        $this->updateStatus($sampleId);
     }
 
     function updateStatus($sampleId) {

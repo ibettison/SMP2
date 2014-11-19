@@ -83,11 +83,8 @@ class makeArchiveXML extends makeXML {
 		}
 	}
 
-	public function setFileLocation(){
-		if(!defined("ROOT_FOLDER")){
-			$root = $_SERVER["DOCUMENT_ROOT"];
-			define('ROOT_FOLDER', $root);
-		}
-		return(ROOT_FOLDER."SMP2/xml-documents/files-archived/");
+	public function createFileRecord($findFile, $samplesId, $fileName, $dom)
+	{
+			dl::update("smp2_filename", array("filename" => $fileName, "xml_fullSampleInfo" => $dom->saveXML()), "samples_id =" . $samplesId);
 	}
 }

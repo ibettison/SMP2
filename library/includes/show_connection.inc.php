@@ -1,8 +1,10 @@
 <?php
+
 if(!defined("ROOT_FOLDER")){
 	$root = $_SERVER["DOCUMENT_ROOT"];
 	define('ROOT_FOLDER', $root);
 }
+
 if(file_exists(ROOT_FOLDER."SMP2/library/includes/connection.json")) {
 	$connectionString = json_decode(file_get_contents(ROOT_FOLDER."SMP2/library/includes/connection.json"));
 	$connDB = $connectionString->dbName;

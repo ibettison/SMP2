@@ -9,8 +9,8 @@ class sftpConnect{
 	static public $ftpArchiveFolder;
 	static public $connectFtp;
 
-    static public function createSFTPConnection($server, $user, $pass, $send, $result, $archive){
-		$jsonArray = array("ftpServer"=>$server, "ftpUserName"=>$user, "ftpPassword"=>$pass, "ftpSendFolder"=>$send, "ftpResultFolder"=>$result, "ftpArchiveFolder"=>$archive);
+    static public function createSFTPConnection($user, $pass, $send, $result, $archive){
+		$jsonArray = array("ftpUserName"=>$user, "ftpPassword"=>$pass, "ftpSendFolder"=>$send, "ftpResultFolder"=>$result, "ftpArchiveFolder"=>$archive);
 		try{
 			if(!file_put_contents(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json", json_encode($jsonArray))){
 				throw new Exception("The .json file was not created, there may be a permissions issue.");
@@ -26,11 +26,18 @@ class sftpConnect{
         return json_decode(file_get_contents(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json"));
     }
 
-    static public function checkConnection() {
+	/**
+	 * @function getSFTPServer This is the hardcoded link to the SFTP server
+	 * @return string server address for the SFTP server
+	 */
+	static public function getSFTPServer(){
+		return "143.65.192.45";
+	}
 
-        error_reporting(E_ALL & ~E_WARNING);
+    static public function checkConnection() {
         self::$sFTPConnection 			= self::getSFTPConnection();
-        $conn 							= new Net_SFTP(self::$sFTPConnection->ftpServer);
+		self::$ftpServer				= self::getSFTPServer();
+        $conn 							= new Net_SFTP(self::$ftpServer);
         if(!$conn->login(self::$sFTPConnection->ftpUserName, self::$sFTPConnection->ftpPassword)){
             return false;
         }else{
@@ -42,7 +49,7 @@ class sftpConnect{
 	static public function connectionVariables(){
 		if(file_exists(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json")) {
 			self::$connectFtp 			= json_decode(file_get_contents(ROOT_FOLDER."SMP2/library/includes/ftpConnect.json"));
-			self::$ftpServer 			= self::$connectFtp->ftpServer;
+			self::$ftpServer 			= self::getSFTPServer();
 			self::$ftpUserName 			= self::$connectFtp->ftpUserName;
 			self::$ftpPassword 			= self::$connectFtp->ftpPassword;
 			self::$ftpSendFolder 		= self::$connectFtp->ftpSendFolder;
