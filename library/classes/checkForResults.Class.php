@@ -31,7 +31,7 @@ class checkResults {
 
 	function findRecords($resultsList){
 		foreach($resultsList as $files) {
-			if($result = simplexml_load_file($this->connect->get($files))){
+			if($result = simplexml_load_string($this->connect->get($files))){
 				try{
 					$sampleIdentifier = $result->xpath("//sourceSampleIdentifier/text()");
 					if(empty($sampleIdentifier)){
