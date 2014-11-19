@@ -102,6 +102,7 @@ $("#viewSelected").click(function(){
 					success: function(data) {
 						$("#samplesMessage").show();
 						$("#samplesMessage").html(data);
+						Gumby.init();
 					}
 				});
 			}
@@ -134,6 +135,7 @@ $("#deleteFTPFiles").click(function(){
 						dataType : 'html',
 						success : function (response) {
 							$("#viewSamples").html(response);
+							Gumby.init();
 						}
 					});
 				}
@@ -166,6 +168,7 @@ $("#sendFTP").click(function(){
 						dataType : 'html',
 						success : function (response) {
 							$("#viewSamples").html(response);
+							Gumby.init();
 						}
 					});
 				}
@@ -197,6 +200,7 @@ $("#checkResults").click(function(){
 					dataType : 'html',
 					success : function (response) {
 						$("#viewSamples").html(response);
+						Gumby.init();
 					}
 				});
 			}

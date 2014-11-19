@@ -495,6 +495,7 @@ echo "</div>";
 		$("#newsampleForm").slideUp(900);
 		setTimeout(function() {
 			$("#newsampleForm").empty();
+			Gumby.init();
 		}, 1000);
 	});
 
@@ -503,10 +504,12 @@ echo "</div>";
 		$("#newsampleForm").slideUp(900);
 		setTimeout(function() {
 			$("#newsampleForm").empty();
+			Gumby.init();
 		}, 1000);
 	});
 	$("#submit_button").click(function(){
 		$("#smp2_form").submit();
+		Gumby.init();
 	});
 
 	/*
