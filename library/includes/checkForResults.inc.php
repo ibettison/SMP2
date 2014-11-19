@@ -17,7 +17,6 @@ try{
 	$results 			= new checkResults();
 	$resultsFolder 		= $ftpConnect["resultFolder"];
 	$resultNames 		= $results->findResults($resultsFolder);
-	$folder_location 	= $results->downloadFiles(ROOT_FOLDER."/SMP2/xml-documents/files-received/");
 	$recordArray 		= $results->findRecords($resultNames);
 	if($results->writeRecords()){
 		echo "Results have been received and the data extracted and saved.";

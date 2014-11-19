@@ -29,19 +29,9 @@ class checkResults {
 		}
 	}
 
-	function downloadFiles($download_folder) {
-		$this->fileLocation = $download_folder;
-		foreach($this->fileNames as $fileName){
-			if($this->connect->get($fileName, $download_folder.$fileName)){
-				echo "<BR>Results file ".$fileName." has been downloaded.";
-			}
-		}
-
-	}
-
 	function findRecords($resultsList){
 		foreach($resultsList as $files) {
-			if($result = simplexml_load_file($this->fileLocation.$files)){
+			if($result = simplexml_load_file($this->connect->get($files))){
 				try{
 					$sampleIdentifier = $result->xpath("//sourceSampleIdentifier/text()");
 					if(empty($sampleIdentifier)){
