@@ -30,11 +30,13 @@ try {
 function createTables() {
 
 	$writeTable = "CREATE TABLE IF NOT EXISTS smp2_filename (
-		fn_id mediumint(9) NOT NULL AUTO_INCREMENT,
-	  samples_id mediumint(9) NOT NULL,
-	  filename varchar(50) NOT NULL,
-	  PRIMARY KEY (fn_id)
-	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
+			fn_id mediumint(9) NOT NULL AUTO_INCREMENT,
+	  		samples_id mediumint(9) NOT NULL,
+	  		filename varchar(50) NOT NULL,
+	  		xml_sampleInfo mediumtext NOT NULL,
+  			xml_fullSampleInfo mediumtext NOT NULL,
+	  		PRIMARY KEY (fn_id)
+			) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
 	$newTable = dl::_query($writeTable);
 	if($newTable == 1) {
 		echo "<BR>TABLE: `smp2_filename` created.";
