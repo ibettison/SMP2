@@ -18,6 +18,6 @@
     },
     "require": {
         "phpseclib/phpseclib": "0.3.8",
-        "phpexcel/phpexcel": "v1.7.7"
+        "phpoffice/phpexcel": "1.8.0"
     }
 }
